@@ -12,7 +12,6 @@ private:
 	int count;
 	int capacity;
 
-	char* enterString(const size_t length);
 	void write(const char* fileName);
 	void read();
 	bool isExists(const char* fileName);
@@ -21,11 +20,9 @@ public:
 	~File();
 
 	void initialCreate();
-	bool add();
 	void removeProduct(const size_t index);
 	bool print();
 	bool exit();
-	bool help();
 	bool saveAs();
 	bool clean();
 

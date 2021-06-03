@@ -15,7 +15,7 @@ void HomeView::menuView()
 	cout << "Open (open)" << endl;
 	cout << "Close (close)" << endl;
 	cout << "Save (save)" << endl;
-	cout << "Save As (save as)" << endl;
+	cout << "Save As (saveAs)" << endl;
 	cout << "Help (help)" << endl;
 	cout << "-------- Warehouse commands --------" << endl;
 	cout << "Add (add)" << endl;
@@ -28,6 +28,7 @@ bool HomeView::menu()
 {
 	menuView();
 
+
 	char consoleCommand[20];
 	cin.getline(consoleCommand, 20);
 
@@ -36,42 +37,48 @@ bool HomeView::menu()
 	{
 		return fileView.openView();
 	}
+
 	if (compareStrings(consoleCommand, "close", getSize(consoleCommand), 5))
 	{
 		return fileView.closeView();
 	}
+
 	if (compareStrings(consoleCommand, "help", getSize(consoleCommand), 4))
 	{
 		return fileView.helpView();
 	}
-	if (compareStrings(consoleCommand, "save as", getSize(consoleCommand), 7))
+
+	if (compareStrings(consoleCommand, "saveAs", getSize(consoleCommand), 6))
 	{
 		return fileView.saveAsView();;
 	}
+
 	if (compareStrings(consoleCommand, "save", getSize(consoleCommand), 4))
 	{
 		return fileView.saveView();
 	}
 
-	// Product View
+	// Product Commands
 	if (compareStrings(consoleCommand, "add", getSize(consoleCommand), 3))
 	{
-		/*
-		if (Class.add())
+		if (fileView.addView())
 		{
+			cin.ignore();
 			cout << "has been added new product" << endl;;
 			return true;
 		}
-		else {
-			cout << "Has not been added new product" << endl;;
-			return false;
-		}
-		*/
+
+		cin.ignore();
+		cout << "Has not been added new product" << endl;;
+		return false;
+
 	}
+
 	if (compareStrings(consoleCommand, "exit", getSize(consoleCommand), 4))
 	{
 		return false;
 	}
+
 	if (compareStrings(consoleCommand, "print", getSize(consoleCommand), 5))
 	{
 		return false;

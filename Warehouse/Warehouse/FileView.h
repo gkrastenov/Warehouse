@@ -1,8 +1,12 @@
 #pragma once
+#include "FileService.h"
+
 class FileView
 {
 private:
+	FileService service;
 
+	char* enterString(const size_t length);
 public:
 	FileView();
 
@@ -11,4 +15,5 @@ public:
 	bool saveView();
 	bool saveAsView();
 	bool helpView();
+	bool addView();
 };

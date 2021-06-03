@@ -36,65 +36,6 @@ File::~File()
 	capacity = 0;
 }
 
-bool File::add()
-{
-	Product product = Product();
-	cout << "Enter product description" << endl;
-	product.setDescription(enterString(product.MAX_DESCRIPTION_LENGTH));
-
-	cout << "Enter expiry date time (example: 2021/12/23)" << endl;
-	product.setExpiryDate(enterString(10));
-
-	cout << "Enter entry date time (example: 2020/12/23)" << endl;
-	product.setEntryDate(enterString(10));
-
-	cout << "Enter product manufacturer" << endl;
-	product.setManufacturer(enterString(product.MAX_MANUFACTURER_LENGTH));
-
-	cout << "Enter product unit (0 for Kilograms , 1 for Liters)" << endl;
-	int unit;
-	cin >> unit;
-	product.setUnit(unit);
-
-	cout << "Enter quantity:" << endl;
-	int quantity;
-	cin >> quantity;
-	product.setQuantity(quantity);
-
-	cout << "Enter location:" << endl;
-	int location;
-	cin >> location;
-	product.setLocation(location);
-
-	cout << "Enter product comment" << endl;
-	cin.ignore();
-	product.setComment(enterString(product.MAX_COMMENT_LENGTH));
-
-	if (count + 1 > capacity)
-	{
-		capacity *= 2;
-		Product* newProduct = new Product[capacity];
-		delete[] products;
-		products = newProduct;
-
-		products[count] = product;
-		count++;
-	}
-	else {
-		products[count] = product;
-		count++;
-	}
-
-	write(fileName);
-	return true;
-}
-
-char* File::enterString(const size_t length)
-{
-	char* str = new char[length + 1];
-	std::cin.getline(str, length + 1);
-	return str;
-}
 
 void File::initialCreate()
 {
@@ -113,11 +54,12 @@ void File::setFileName(const char* name) {
 }
 
 void File::write(const char* fileName) {
+
 	ofstream myfile;
 	myfile.open(fileName);
 	for (size_t i = 0; i < count; i++)
 	{
-		myfile << products[i].getDescription() << endl;
+		myfile << products[i].getDescription() <<  endl;
 
 		DateTime currDate = products[i].getExpiryDate();
 		myfile << currDate.getYear() << '/' << currDate.getMonth() << '/'
@@ -169,15 +111,6 @@ bool File::exit()
 	return false;
 }
 
-bool File::help()
-{
-	cout << "add : Add a new product to the warehouse" << endl;
-	cout << "print : Displays information about the products available in the warehouse" << endl;
-	cout << "save as : Save warehouse in other file" << endl;
-	cout << "exit : Exit from the program" << endl;
-
-	return true;
-}
 
 bool File::isExists(const char* fileName)
 {

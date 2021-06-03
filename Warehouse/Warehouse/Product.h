@@ -52,5 +52,6 @@ public:
 	int unitToNumber(const Unit unit);
 	void printUnit(const Unit unit);
 	void printProduct();
+
 	Product& operator = (const Product& product);
 };

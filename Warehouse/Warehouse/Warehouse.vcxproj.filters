@@ -40,6 +40,9 @@
     <ClCompile Include="FileView.cpp">
       <Filter>Views</Filter>
     </ClCompile>
+    <ClCompile Include="Vector.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DateTime.h">
