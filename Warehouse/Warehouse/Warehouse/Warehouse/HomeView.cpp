@@ -3,6 +3,11 @@
 
 using namespace std;
 
+HomeView::HomeView()
+{
+	this->fileView = FileView();
+}
+
 void HomeView::menuView()
 {
 	cout << "-------- Menu --------" << endl;
@@ -17,7 +22,6 @@ void HomeView::menuView()
 	cout << "Print (print)" << endl;
 	cout << "Exit (exit)" << endl;
 	cout << "Enter next command: " << endl;
-
 }
 
 bool HomeView::menu()
@@ -26,14 +30,30 @@ bool HomeView::menu()
 
 	char consoleCommand[20];
 	cin.getline(consoleCommand, 20);
+
+	// File commands
 	if (compareStrings(consoleCommand, "open", getSize(consoleCommand), 4))
 	{
-		return false;
+		return fileView.openView();
 	}
 	if (compareStrings(consoleCommand, "close", getSize(consoleCommand), 5))
 	{
-		return false;
+		return fileView.closeView();
 	}
+	if (compareStrings(consoleCommand, "help", getSize(consoleCommand), 4))
+	{
+		return fileView.helpView();
+	}
+	if (compareStrings(consoleCommand, "save as", getSize(consoleCommand), 7))
+	{
+		return fileView.saveAsView();;
+	}
+	if (compareStrings(consoleCommand, "save", getSize(consoleCommand), 4))
+	{
+		return fileView.saveView();
+	}
+
+	// Product View
 	if (compareStrings(consoleCommand, "add", getSize(consoleCommand), 3))
 	{
 		/*
@@ -49,14 +69,6 @@ bool HomeView::menu()
 		*/
 	}
 	if (compareStrings(consoleCommand, "exit", getSize(consoleCommand), 4))
-	{
-		return false;
-	}
-	if (compareStrings(consoleCommand, "help", getSize(consoleCommand), 4))
-	{
-		return false;
-	}
-	if (compareStrings(consoleCommand, "save as", getSize(consoleCommand), 7))
 	{
 		return false;
 	}

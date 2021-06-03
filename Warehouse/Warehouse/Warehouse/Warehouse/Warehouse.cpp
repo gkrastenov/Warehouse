@@ -4,6 +4,7 @@
 int main()
 {
 	HomeView view = HomeView();
+
 	while (true)
 	{
 		if (view.menu() == false)

@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Data">
+      <UniqueIdentifier>{d59e22ba-9e02-4670-b1fe-6c38661baa7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities">
+      <UniqueIdentifier>{118e7e7a-da45-4998-a20b-de67c5881898}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{b65fdda8-4edf-4a6d-824b-57d125856f25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Views">
+      <UniqueIdentifier>{0c46c6c0-e8c1-48ea-bd81-45f801f961a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Services">
+      <UniqueIdentifier>{c7c950c3-26ad-4ee1-a963-877b4b19a575}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Warehouse.cpp" />
+    <ClCompile Include="HomeView.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="DateTime.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="FileService.cpp">
+      <Filter>Services</Filter>
+    </ClCompile>
+    <ClCompile Include="Product.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="File.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="ProductView.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="FileView.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DateTime.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="FileService.h">
+      <Filter>Services</Filter>
+    </ClInclude>
+    <ClInclude Include="Product.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeView.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="File.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="ProductView.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="FileView.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -139,19 +139,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FileView.cpp" />
     <ClCompile Include="DateTime.cpp" />
     <ClCompile Include="File.cpp" />
     <ClCompile Include="FileService.cpp" />
     <ClCompile Include="HomeView.cpp" />
     <ClCompile Include="Product.cpp" />
+    <ClCompile Include="ProductView.cpp" />
     <ClCompile Include="Warehouse.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FileView.h" />
     <ClInclude Include="DateTime.h" />
     <ClInclude Include="File.h" />
     <ClInclude Include="FileService.h" />
     <ClInclude Include="HomeView.h" />
     <ClInclude Include="Product.h" />
+    <ClInclude Include="ProductView.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
