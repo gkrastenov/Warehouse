@@ -7,6 +7,8 @@ class FileService
 private:
 	char* fileName;
 
+	void cleanFile() const;
+
 public:
 	const size_t MAX_SIZE_FILENAME = 50;
 
@@ -20,7 +22,6 @@ public:
 
 	Vector<Product> readFromFile(const char* fileName) const;
 	bool writeToFile() const;
-	void cleanFile();
 
 	bool isFileExist(const char* fileName);
 	bool isOpenFile();

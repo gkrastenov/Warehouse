@@ -68,8 +68,7 @@ bool HomeView::menu()
 		}
 
 		cout << "Has not been added new product" << endl;;
-		return false;
-
+		return true;
 	}
 
 	if (compareStrings(consoleCommand, "exit", getSize(consoleCommand), 4))

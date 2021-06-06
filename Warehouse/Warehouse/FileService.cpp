@@ -90,9 +90,11 @@ Vector<Product> FileService::readFromFile(const char* fileName) const
 
 bool FileService::writeToFile() const
 {
-	ofstream myfile;
+	cleanFile();
 
+	ofstream myfile;
 	myfile.open(fileName);
+
 	for (size_t i = 0; i < products.getSize(); i++)
 	{
 		Product currentProduct = products[i];
@@ -115,7 +117,7 @@ bool FileService::writeToFile() const
 	return true;
 }
 
-void FileService::cleanFile()
+void FileService::cleanFile() const
 {
 	ofstream ofs;
 	ofs.open(fileName, std::ofstream::trunc);

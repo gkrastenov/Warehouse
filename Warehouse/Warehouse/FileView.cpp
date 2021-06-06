@@ -8,7 +8,6 @@ FileView::FileView() {
 }
 
 bool FileView::openView() {
-	cout << endl;
 	cout << "Enter file name (Example: file2.txt)" << endl;
 
 	char inputFileName[50];
@@ -30,11 +29,12 @@ bool FileView::openView() {
 	return true;
 }
 
-bool FileView::closeView() {
+bool FileView::closeView()
+{
 
 	if (this->service.isOpenFile() == false)
 	{
-		return false;
+		return true;
 	}
 
 	this->service.setFileName(nullptr);
@@ -44,7 +44,13 @@ bool FileView::closeView() {
 	return true;
 }
 
-bool FileView::saveView() {
+bool FileView::saveView() 
+{
+	if (this->service.isOpenFile() == false)
+	{
+		return true;
+	}
+
 	cout << "Saving......" << endl;
 
 	bool isSaved = this->service.writeToFile();
@@ -96,6 +102,13 @@ bool FileView::addView() {
 	cout << "Enter entry date time (example: 2020/12/23)" << endl;
 	product.setEntryDate(enterString(10));
 
+	if (isValidEnterDate(product.getEntryDate()) == false 
+		|| isValidEnterDate(product.getExpiryDate()) == false
+		|| product.getEntryDate() < product.getExpiryDate() == false)
+	{
+		return false;
+	}
+
 	cout << "Enter product manufacturer" << endl;
 	product.setManufacturer(enterString(product.MAX_MANUFACTURER_LENGTH));
 
@@ -127,11 +140,16 @@ char* FileView::enterString(const size_t length)
 	return str;
 }
 
+bool FileView::isValidEnterDate(const DateTime& dateTime)
+{
+	return (dateTime.getDay() == 0 || dateTime.getMonth() == 0 || dateTime.getYear() == 0) == false;
+}
+
 bool FileView :: printView()
 {
 	if (this->service.isOpenFile() == false)
 	{
-		return false;
+		return true;
 	}
 
 	this->service.getAllProducts();
