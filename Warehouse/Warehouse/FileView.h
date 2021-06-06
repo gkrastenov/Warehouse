@@ -15,5 +15,7 @@ public:
 	bool saveView();
 	bool saveAsView();
 	bool helpView();
+	bool exitView();
 	bool addView();
+	bool printView();
 };

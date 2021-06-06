@@ -63,12 +63,10 @@ bool HomeView::menu()
 	{
 		if (fileView.addView())
 		{
-			cin.ignore();
 			cout << "has been added new product" << endl;;
 			return true;
 		}
 
-		cin.ignore();
 		cout << "Has not been added new product" << endl;;
 		return false;
 
@@ -81,9 +79,9 @@ bool HomeView::menu()
 
 	if (compareStrings(consoleCommand, "print", getSize(consoleCommand), 5))
 	{
-		return false;
-
+		fileView.printView();
 	}
+
 	if (compareStrings(consoleCommand, "clean", getSize(consoleCommand), 5))
 	{
 		return false;

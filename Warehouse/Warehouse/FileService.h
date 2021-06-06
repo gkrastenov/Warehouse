@@ -18,13 +18,14 @@ public:
 	void setFileName(const char* name);
 	char* getFileName() const;
 
-     //Vector<Product>& ReadFromFile(const char* fileName) const;
-	bool WriteToFile() const;
+	Vector<Product> readFromFile(const char* fileName) const;
+	bool writeToFile() const;
 
 	bool isFileExist(const char* fileName);
-	bool IsOpenFile();
+	bool isOpenFile();
 	void createFile(const char* fileName);
 	bool addProduct(const Product& newProduct);
+	void getAllProducts() const;
 
 	FileService& operator = (const FileService& date);
 };

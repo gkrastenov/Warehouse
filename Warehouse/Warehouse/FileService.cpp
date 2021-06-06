@@ -11,7 +11,7 @@
 
 using namespace std;
 
-bool FileService::IsOpenFile()
+bool FileService::isOpenFile()
 {
 	if (this->fileName == nullptr)
 	{
@@ -33,7 +33,62 @@ FileService::~FileService()
 	this->fileName = nullptr;
 }
 
-bool FileService::WriteToFile() const
+Vector<Product> FileService::readFromFile(const char* fileName) const
+{
+	Vector<Product> productsFromFile = Vector<Product>();
+
+	ifstream file(fileName);
+
+	char descriptionLine[50];
+	char expiryDateLine[30];
+	char entryDateLine[30];
+	char manufacturLine[30];
+	int unitLine;
+	int  qantityLine;
+	int  locationLine;
+	char commentLine[30];
+
+	while (!file.eof())
+	{
+		Product currentProduct = Product();
+
+		file >> descriptionLine;
+
+		if (descriptionLine[0] == '\0')
+		{
+			break;
+		}
+		currentProduct.setDescription(descriptionLine);
+
+		file >> expiryDateLine;
+		currentProduct.setExpiryDate(expiryDateLine);
+
+		file >> entryDateLine;
+		currentProduct.setEntryDate(entryDateLine);
+
+		file >> manufacturLine;
+		currentProduct.setManufacturer(manufacturLine);
+
+		file >> unitLine;
+		currentProduct.setUnit(unitLine);
+
+		file >> qantityLine;
+		currentProduct.setQuantity(qantityLine);
+
+		file >> locationLine;
+		currentProduct.setLocation(locationLine);
+
+		file >> commentLine;
+		currentProduct.setComment(commentLine);
+
+		productsFromFile.push_back(currentProduct);
+	}
+
+	file.close();
+	return productsFromFile;
+}
+
+bool FileService::writeToFile() const
 {
 	ofstream myfile;
 
@@ -79,6 +134,27 @@ bool FileService::addProduct(const Product& product)
 {
 	products.push_back(product);
 	return true;
+}
+
+void FileService::getAllProducts() const
+{
+	Vector<Product> availableProducts = readFromFile(fileName);
+
+	for (size_t i = 0; i < availableProducts.getSize(); i++)
+	{
+		cout << "--------------- [" << i + 1<< "]--------------" << endl;
+		cout << "Description: " << availableProducts[i].getDescription() << endl;
+		cout << "EntryDate: " << availableProducts[i].getEntryDate() << endl;
+		cout << "ExpiryDate: " << availableProducts[i].getExpiryDate() << endl;
+		cout << "Manufacturer: " << availableProducts[i].getManufacturer() << endl;
+		cout << "Unit: ";
+		availableProducts[i].printUnit(availableProducts[i].getUnit());
+		cout << endl;
+		cout << "Quantity: " << availableProducts[i].getQuantity() << endl;
+		cout << "Location: " << availableProducts[i].getLocation() << endl;
+		cout << "Comment: " << availableProducts[i].getComment() << endl;
+	}
+	;
 }
 
 char* FileService::getFileName() const 

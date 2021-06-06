@@ -18,8 +18,7 @@ bool FileView::openView() {
 
 	if (service.isFileExist(inputFileName))
 	{
-		// read
-		//service.products = service.ReadFromFile(inputFileName);
+		service.products = service.readFromFile(inputFileName);
 		cout << "Successfully opened " << inputFileName << endl;
 		return true;
 	}
@@ -33,7 +32,7 @@ bool FileView::openView() {
 
 bool FileView::closeView() {
 
-	if (this->service.IsOpenFile() == false)
+	if (this->service.isOpenFile() == false)
 	{
 		return false;
 	}
@@ -48,7 +47,7 @@ bool FileView::closeView() {
 bool FileView::saveView() {
 	cout << "Saving......" << endl;
 
-	bool isSaved = this->service.WriteToFile();
+	bool isSaved = this->service.writeToFile();
 	if (isSaved)
 	{
 		cout << "Saved succesfully" << endl;
@@ -82,7 +81,7 @@ bool FileView::exitView()
 
 bool FileView::addView() {
 
-	if (this->service.IsOpenFile() == false)
+	if (this->service.isOpenFile() == false)
 	{
 		return false;
 	}
@@ -126,4 +125,15 @@ char* FileView::enterString(const size_t length)
 	char* str = new char[length + 1];
 	std::cin.getline(str, length + 1);
 	return str;
+}
+
+bool FileView :: printView()
+{
+	if (this->service.isOpenFile() == false)
+	{
+		return false;
+	}
+
+	this->service.getAllProducts();
+	return true;
 }
