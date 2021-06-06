@@ -115,6 +115,13 @@ bool FileService::writeToFile() const
 	return true;
 }
 
+void FileService::cleanFile()
+{
+	ofstream ofs;
+	ofs.open(fileName, std::ofstream::trunc);
+	ofs.close();
+}
+
 bool FileService::isFileExist(const char* fileName)
 {
 	std::fstream fileStream;
@@ -149,12 +156,10 @@ void FileService::getAllProducts() const
 		cout << "Manufacturer: " << availableProducts[i].getManufacturer() << endl;
 		cout << "Unit: ";
 		availableProducts[i].printUnit(availableProducts[i].getUnit());
-		cout << endl;
 		cout << "Quantity: " << availableProducts[i].getQuantity() << endl;
 		cout << "Location: " << availableProducts[i].getLocation() << endl;
 		cout << "Comment: " << availableProducts[i].getComment() << endl;
 	}
-	;
 }
 
 char* FileService::getFileName() const 

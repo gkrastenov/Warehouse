@@ -79,7 +79,7 @@ bool HomeView::menu()
 
 	if (compareStrings(consoleCommand, "print", getSize(consoleCommand), 5))
 	{
-		fileView.printView();
+		return fileView.printView();
 	}
 
 	if (compareStrings(consoleCommand, "clean", getSize(consoleCommand), 5))

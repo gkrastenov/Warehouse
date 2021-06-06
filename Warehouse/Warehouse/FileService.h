@@ -20,6 +20,7 @@ public:
 
 	Vector<Product> readFromFile(const char* fileName) const;
 	bool writeToFile() const;
+	void cleanFile();
 
 	bool isFileExist(const char* fileName);
 	bool isOpenFile();
