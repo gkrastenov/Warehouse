@@ -63,110 +63,14 @@ void Product::setEntryDate(const DateTime& entryDate) {
     this->entryDate = entryDate;
 }
 
-bool Product::setExpiryDate(const char* expiryDate) {
-    int date[3] = { 0, 0, 0};
-    int index = 0;
-    int arrayIndex = 0;
-    int curretNumber = 0;
-    while (expiryDate[arrayIndex] != '\0')
-    {
-        if (expiryDate[arrayIndex] == '/')
-        {
-            arrayIndex++;
-            continue;
-        }
-
-        if (index == 0)
-        {
-            // set year
-            for (size_t i = 4; i > 0; i--)
-            {
-                if (isNumber(expiryDate[arrayIndex]))
-                {
-                    curretNumber += (int)pow(10, i-1) * charToInt(expiryDate[arrayIndex]);
-                    arrayIndex++;
-                }
-                else {
-                    return false;
-                }
-            }
-            date[index] = curretNumber;
-            curretNumber = 0;
-            index++;
-        }
-        else {
-
-            for (size_t i = 2; i > 0; i--)
-            {
-                if (isNumber(expiryDate[arrayIndex]))
-                {
-                    curretNumber += (int)pow(10, i - 1) * charToInt(expiryDate[arrayIndex]);
-                    arrayIndex++;
-                }
-                else {
-                    return false;
-                }
-            }
-            date[index] = curretNumber;
-            curretNumber = 0;
-            index++;
-        }
-    }
-    this->expiryDate = DateTime(date[0], date[1], date[2]);
-    return true;
+void Product::setExpiryDate(const char* expiryDate) {
+   
+    this->expiryDate = DateTime(expiryDate);
 }
 
-bool Product::setEntryDate(const char* entryDate) {
-    int date[3] = { 0, 0, 0 };
-    int index = 0;
-    int arrayIndex = 0;
-    int curretNumber = 0;
-    while (entryDate[arrayIndex] != '\0')
-    {
-        if (entryDate[arrayIndex] == '/')
-        {
-            arrayIndex++;
-            continue;
-        }
-
-        if (index == 0)
-        {
-            // set year
-            for (size_t i = 4; i > 0; i--)
-            {
-                if (isNumber(entryDate[arrayIndex]))
-                {
-                    curretNumber += (int)pow(10, i - 1) * charToInt(entryDate[arrayIndex]);
-                    arrayIndex++;
-                }
-                else {
-                    return false;
-                }
-            }
-            date[index] = curretNumber;
-            curretNumber = 0;
-            index++;
-        }
-        else {
-
-            for (size_t i = 2; i > 0; i--)
-            {
-                if (isNumber(entryDate[arrayIndex]))
-                {
-                    curretNumber += (int)pow(10, i - 1) * charToInt(entryDate[arrayIndex]);
-                    arrayIndex++;
-                }
-                else {
-                    return false;
-                }
-            }
-            date[index] = curretNumber;
-            curretNumber = 0;
-            index++;
-        }
-    }
-    this->entryDate = DateTime(date[0], date[1], date[2]);
-    return true;
+void Product::setEntryDate(const char* entryDate) {
+    
+    this->entryDate = DateTime(entryDate);
 }
 
 bool Product::setUnit(const int unit)
@@ -185,15 +89,15 @@ bool Product::setUnit(const int unit)
     return false;
 }
 
-char* Product::getDescription() {
+char* Product::getDescription() const { 
     return this->description;
 }
 
-char* Product::getManufacturer() {
+char* Product::getManufacturer() const {
     return this->manufacturer;
 }
 
-DateTime& Product::getExpiryDate() {
+DateTime& Product::getExpiryDate(){
     return this->expiryDate;
 }
 
@@ -201,26 +105,16 @@ DateTime& Product::getEntryDate() {
     return this->entryDate;
 }
 
-int Product::getQuantity() {
+int Product::getQuantity() const {
     return this->quantity;
 }
 
-int Product::getLocation() {
+int Product::getLocation() const {
     return this->location;
 }
 
-char* Product::getComment() {
+char* Product::getComment() const {
     return this->comment;
-}
-
-bool Product::isNumber(const char symbol)
-{
-    return symbol >= '0' && symbol <= '9';
-}
-
-int Product::charToInt(const char symbol)
-{
-   return (int)symbol - 48;
 }
 
 int Product::unitToNumber(const Unit unit) {
@@ -254,7 +148,7 @@ void Product::printUnit(const Unit unit) {
     }
 }
 
-Unit Product::getUnit() {
+Unit Product::getUnit() const {
     return unit;
 }
 
