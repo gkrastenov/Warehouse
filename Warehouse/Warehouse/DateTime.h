@@ -19,18 +19,23 @@ private:
 	unsigned int month;
 	unsigned int year;
 
+	bool isNumber(const char symbol);
+	int charToInt(const char symbol);
+	void setDefaultValues();
+
 public:
 	DateTime();
 	DateTime(const int year, const int month, const int day);
+	DateTime(const char* date);
 
-	// TODO: add const
-	int getDay();
-	int getMonth();
-	int getYear();
+	int getDay() const;
+	int getMonth() const;
+	int getYear() const;
+
+	bool isValidDate(const int year, const int month, const int day);
 
 	DateTime& operator = (const DateTime& date);
-	bool operator <= (const DateTime& date);
+	bool operator < (const DateTime& date);
 
 	friend std::ostream& operator<<(std::ostream& os, DateTime& date);
-
 };
