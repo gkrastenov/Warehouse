@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+
 class DateTime
 {
 private:
@@ -13,9 +15,9 @@ private:
 	// year since 1900
 	const unsigned int MIN_YEAR = 1900;
 
-	unsigned int day; 
-	unsigned int month; 
-	unsigned int year;  
+	unsigned int day;
+	unsigned int month;
+	unsigned int year;
 
 public:
 	DateTime();
@@ -25,8 +27,10 @@ public:
 	int getDay();
 	int getMonth();
 	int getYear();
-	
+
 	DateTime& operator = (const DateTime& date);
 	bool operator <= (const DateTime& date);
-};
 
+	friend std::ostream& operator<<(std::ostream& os, DateTime& date);
+
+};

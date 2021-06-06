@@ -47,3 +47,9 @@ bool DateTime::operator <= (const DateTime& dateTime) {
 		&& (this->getMonth() <= dateTime.month)
 		&& (this->getYear() <= dateTime.year);
 }
+
+std::ostream& operator<<(std::ostream& os, DateTime& date)
+{
+	os << date.getDay() << '/' << date.getMonth() << '/' << date.getYear();
+	return os;
+}
