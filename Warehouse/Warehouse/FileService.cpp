@@ -168,18 +168,20 @@ void FileService::addProduct(Product& newProduct)
 		{
 			if (products[i].getLocation() != newProduct.getLocation())
 			{
-				products.push_back(newProduct);
+				withBigQuantityProduct(newProduct, newProduct.getQuantity());
 				return;
 			}
 			else {
+
 				int newLocation = newProduct.getLocation();
 				while (newLocation == products[i].getLocation())
 				{
 					std::cout << "Enter new location because this product: " << newProduct.getDescription() << " has equal expiry date" << endl;
 					cin >> newLocation;
 				}
+
 				newProduct.setLocation(newLocation);
-				products.push_back(newProduct);
+				withBigQuantityProduct(newProduct, newProduct.getQuantity());
 				return;
 			}
 		}
@@ -190,7 +192,25 @@ void FileService::addProduct(Product& newProduct)
 			&& products[i].getQuantity() < newProduct.MAX_QUANTITY)
 		{
 			int sumQuantity = products[i].getQuantity() + newProduct.getQuantity();
-			withBigQuantityProduct(newProduct, sumQuantity);
+			if (sumQuantity <= 10)
+			{
+				products[i].setQuantity(sumQuantity);
+				return;
+			}
+			else {
+				products[i].setQuantity(newProduct.MAX_QUANTITY);
+
+				if (newProduct.getLocation() == products[i].getLocation())
+				{
+					int newLocation;
+					std::cout << "Enter new location because this product: " << newProduct.getLocation() << " is full" << endl;
+					cin >> newLocation;
+					newProduct.setLocation(newLocation);
+				}
+
+				withBigQuantityProduct(newProduct, sumQuantity - 10);
+				return;
+			}
 		}
 	}
 
@@ -218,6 +238,7 @@ void FileService::withBigQuantityProduct(Product& newProduct, int sumQuantity)
 		}
 	}
 	else {
+		newProduct.setQuantity(sumQuantity);
 		products.push_back(newProduct);
 		return;
 	}
