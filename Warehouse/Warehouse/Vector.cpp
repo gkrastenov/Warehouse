@@ -4,7 +4,7 @@
 using usi = unsigned short int;
 
 template<typename T>
-class Vector
+class List
 {
 private:
     T* data;
@@ -30,19 +30,19 @@ private:
 
 public:
 
-    Vector()
+    List()
     {
         capacity = 8;
         size = 0;
         data = new T[capacity];
     }
 
-    Vector(const Vector<T>& others)
+    List(const List<T>& others)
     {
         copy(others);
     }
 
-    void copy(const Vector<T>& others)
+    void copy(const List<T>& others)
     {
         capacity = others.capacity;
         size = others.size;
@@ -54,7 +54,7 @@ public:
         }
     }
 
-    Vector<T>& operator=(const Vector<T>& others)
+    List<T>& operator=(const List<T>& others)
     {
         if (this != &others)
         {
@@ -64,7 +64,7 @@ public:
         return *this;
     }
 
-    ~Vector()
+    ~List()
     {
         destroy();
     }
