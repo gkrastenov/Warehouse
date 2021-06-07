@@ -20,6 +20,7 @@ void HomeView::menuView()
 	cout << "-------- Warehouse commands --------" << endl;
 	cout << "Add (add)" << endl;
 	cout << "Print (print)" << endl;
+	cout << "Clean (clean)" << endl;
 	cout << "Exit (exit)" << endl;
 	cout << "Enter next command: " << endl;
 }
@@ -83,7 +84,7 @@ bool HomeView::menu()
 
 	if (compareStrings(consoleCommand, "clean", getSize(consoleCommand), 5))
 	{
-		return false;
+		return fileView.cleanView();
 	}
 
 	cout << "Invalid command" << endl;

@@ -40,7 +40,7 @@
     <ClCompile Include="FileView.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    <ClCompile Include="Vector.cpp">
+    <ClCompile Include="List.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>

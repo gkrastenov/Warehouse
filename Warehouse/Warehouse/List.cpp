@@ -15,7 +15,6 @@ private:
     {
         delete[] data;
     }
-
     void resize()
     {
         capacity += 8;
@@ -27,21 +26,6 @@ private:
         destroy();
         data = newBuffer;
     }
-
-public:
-
-    List()
-    {
-        capacity = 8;
-        size = 0;
-        data = new T[capacity];
-    }
-
-    List(const List<T>& others)
-    {
-        copy(others);
-    }
-
     void copy(const List<T>& others)
     {
         capacity = others.capacity;
@@ -53,7 +37,23 @@ public:
             data[i] = others.data[i];
         }
     }
+public:
 
+    List()
+    {
+        capacity = 8;
+        size = 0;
+        data = new T[capacity];
+    }
+    ~List()
+    {
+        destroy();
+    }
+
+    List(const List<T>& others)
+    {
+        copy(others);
+    }
     List<T>& operator=(const List<T>& others)
     {
         if (this != &others)
@@ -64,11 +64,6 @@ public:
         return *this;
     }
 
-    ~List()
-    {
-        destroy();
-    }
-
     void print()
     {
         for (size_t i = 0; i < size; i++)
@@ -77,12 +72,10 @@ public:
         }
 
     }
-
     usi getSize() const
     {
         return size;
     }
-
     usi getCapacity() const
     {
         return capacity;
@@ -113,13 +106,7 @@ public:
             throw;
         }
     }
-
-    bool isEmpty() const
-    {
-        return size == 0;
-    }
-
-    void push_back(const T& newElem)
+    void add(const T& newElem)
     {
         if (size == capacity)
         {
@@ -127,11 +114,16 @@ public:
         }
         data[size++] = newElem;
     }
-
-    void pop_back()
+    void remove(const T& elem)
     {
-        T* toDelete = data[size - 1];
-        delete toDelete;
-        size--;
+        int elementIndex = -1;
+        for (size_t i = 0; i < this->size; i++)
+        {
+            if (data[i] == elem)
+            {
+                elementIndex = i;
+                break;
+            }
+        }
     }
 };

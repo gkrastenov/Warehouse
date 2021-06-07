@@ -1,6 +1,14 @@
 #include "FileView.h"
 #include<iostream>
+#include <fstream>
+#include <cstdlib>
+#include <filesystem>
+#include <string>
+#include <chrono>
+#include <ctime>  
 
+// for getting date now
+#pragma warning(disable : 4996)
 using namespace std;
 
 FileView::FileView() {
@@ -53,7 +61,7 @@ bool FileView::saveView()
 
 	cout << "Saving......" << endl;
 
-	bool isSaved = this->service.writeToFile();
+	bool isSaved = this->service.writeToFile(this->service.getFileName());
 	if (isSaved)
 	{
 		cout << "Saved succesfully" << endl;
@@ -65,7 +73,22 @@ bool FileView::saveView()
 }
 
 bool FileView::saveAsView() {
-	return true;
+	cout << "Enter file name (Example: other.txt)" << endl;
+
+	char inputFileName[50];
+	cin.getline(inputFileName, 50);
+
+	service.createFile(inputFileName);
+	
+	bool isSaved = this->service.writeToFile(inputFileName);
+	if (isSaved)
+	{
+		cout << "Saved As succesfully" << endl;
+		return true;
+	}
+
+	cout << "Save As failed" << endl;
+	return false;
 }
 
 bool FileView::helpView() {
@@ -145,6 +168,31 @@ bool FileView::addView() {
 	}
 }
 
+bool FileView::printView()
+{
+	if (this->service.isOpenFile() == false)
+	{
+		return true;
+	}
+
+	this->service.getAllProducts();
+	return true;
+}
+
+bool FileView::cleanView()
+{
+	cout << "Cleanning: " << endl;
+
+	std::time_t time = std::time(0);   // get time now
+	std::tm* now = std::localtime(&time);
+	DateTime dateNow = DateTime((now->tm_year + 1900), (now->tm_mon + 1), now->tm_mday);
+
+	cout << "Cleanning: " << endl;
+	this->service.cleanProducts(dateNow);
+
+	return true;
+}
+
 char* FileView::enterString(const size_t length)
 {
 	char* str = new char[length + 1];
@@ -185,15 +233,4 @@ bool FileView::isValidEnterQuantity(const Product& enterProduct)
 {
 	int enterQuantity = enterProduct.getLocation();
 	return (enterQuantity >= enterProduct.MIN_QUANTITY);
-}
-
-bool FileView :: printView()
-{
-	if (this->service.isOpenFile() == false)
-	{
-		return true;
-	}
-
-	this->service.getAllProducts();
-	return true;
 }

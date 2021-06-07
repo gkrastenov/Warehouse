@@ -81,14 +81,14 @@ List<Product> FileService::readFromFile(const char* fileName) const
 		file >> commentLine;
 		currentProduct.setComment(commentLine);
 
-		productsFromFile.push_back(currentProduct);
+		productsFromFile.add(currentProduct);
 	}
 
 	file.close();
 	return productsFromFile;
 }
 
-bool FileService::writeToFile() const
+bool FileService::writeToFile(const char* fileName) const
 {
 	cleanFile();
 
@@ -218,6 +218,10 @@ void FileService::addProduct(Product& newProduct)
 	withBigQuantityProduct(newProduct, sumQuantity);
 }
 
+void FileService::cleanProducts(const DateTime& dateTime)
+{
+}
+
 void FileService::withBigQuantityProduct(Product& newProduct, int sumQuantity)
 {
 	if (sumQuantity > newProduct.MAX_QUANTITY)
@@ -227,19 +231,19 @@ void FileService::withBigQuantityProduct(Product& newProduct, int sumQuantity)
 			if (sumQuantity <= newProduct.MAX_QUANTITY)
 			{
 				newProduct.setQuantity(sumQuantity);
-				products.push_back(newProduct);
+				products.add(newProduct);
 				sumQuantity -= newProduct.MAX_QUANTITY;
 			}
 			else {
 				newProduct.setQuantity(newProduct.MAX_QUANTITY);
-				products.push_back(newProduct);
+				products.add(newProduct);
 				sumQuantity -= newProduct.MAX_QUANTITY;
 			}
 		}
 	}
 	else {
 		newProduct.setQuantity(sumQuantity);
-		products.push_back(newProduct);
+		products.add(newProduct);
 		return;
 	}
 }

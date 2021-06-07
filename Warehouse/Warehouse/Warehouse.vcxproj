@@ -146,7 +146,7 @@
     <ClCompile Include="HomeView.cpp" />
     <ClCompile Include="Product.cpp" />
     <ClCompile Include="ProductView.cpp" />
-    <ClCompile Include="Vector.cpp" />
+    <ClCompile Include="List.cpp" />
     <ClCompile Include="Warehouse.cpp" />
   </ItemGroup>
   <ItemGroup>

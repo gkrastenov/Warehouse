@@ -23,13 +23,14 @@ public:
 	char* getFileName() const;
 
 	List<Product> readFromFile(const char* fileName) const;
-	bool writeToFile() const;
+	bool writeToFile(const char* fileName);
 
 	bool isFileExist(const char* fileName);
 	bool isOpenFile();
 	void createFile(const char* fileName);
 	void getAllProducts() const;
 	void addProduct(Product& newProduct);
+	void cleanProducts(const DateTime& dateTime);
 
 	FileService& operator = (const FileService& date);
 };
