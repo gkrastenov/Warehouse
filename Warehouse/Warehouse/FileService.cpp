@@ -33,9 +33,9 @@ FileService::~FileService()
 	this->fileName = nullptr;
 }
 
-Vector<Product> FileService::readFromFile(const char* fileName) const
+List<Product> FileService::readFromFile(const char* fileName) const
 {
-	Vector<Product> productsFromFile = Vector<Product>();
+	List<Product> productsFromFile = List<Product>();
 
 	ifstream file(fileName);
 
@@ -141,7 +141,7 @@ void FileService::createFile(const char* fileName)
 
 void FileService::getAllProducts() const
 {
-	Vector<Product> availableProducts = readFromFile(fileName);
+	List<Product> availableProducts = readFromFile(fileName);
 
 	for (size_t i = 0; i < availableProducts.getSize(); i++)
 	{
@@ -187,7 +187,7 @@ void FileService::addProduct(Product& newProduct)
 		// second requirement
 		if (isEqual(products[i].getDescription(), newProduct.getDescription())
 			&& products[i].getExpiryDate() == newProduct.getExpiryDate()
-			&& products[i].getQuantity() < MAX_SIZE_QUANTITY)
+			&& products[i].getQuantity() < newProduct.MAX_QUANTITY)
 		{
 			int sumQuantity = products[i].getQuantity() + newProduct.getQuantity();
 			withBigQuantityProduct(newProduct, sumQuantity);
@@ -200,20 +200,20 @@ void FileService::addProduct(Product& newProduct)
 
 void FileService::withBigQuantityProduct(Product& newProduct, int sumQuantity)
 {
-	if (sumQuantity > MAX_SIZE_QUANTITY)
+	if (sumQuantity > newProduct.MAX_QUANTITY)
 	{
 		while (sumQuantity > 0)
 		{
-			if (sumQuantity <= MAX_SIZE_QUANTITY)
+			if (sumQuantity <= newProduct.MAX_QUANTITY)
 			{
 				newProduct.setQuantity(sumQuantity);
 				products.push_back(newProduct);
-				sumQuantity -= MAX_SIZE_QUANTITY;
+				sumQuantity -= newProduct.MAX_QUANTITY;
 			}
 			else {
-				newProduct.setQuantity(MAX_SIZE_QUANTITY);
+				newProduct.setQuantity(newProduct.MAX_QUANTITY);
 				products.push_back(newProduct);
-				sumQuantity -= MAX_SIZE_QUANTITY;
+				sumQuantity -= newProduct.MAX_QUANTITY;
 			}
 		}
 	}
@@ -249,4 +249,3 @@ FileService& FileService::operator=(const FileService& fileService)
 
 	return *this;
 }
-

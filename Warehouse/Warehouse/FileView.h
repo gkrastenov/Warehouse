@@ -1,7 +1,7 @@
 #pragma once
 #include "FileService.h"
 #include "DateTime.h"
-
+#include "Product.h"
 
 class FileView
 {
@@ -10,6 +10,11 @@ private:
 
 	char* enterString(const size_t length);
 	bool isValidEnterDate(const DateTime& dateTime);
+	bool isValidEnterDescription(const Product& enterProduct);
+	bool isValidEnterManufacturer(const Product& enterProduct);
+	bool isValidEnterComment(const Product& enterProduct);
+	bool isValidEnterLocation(const Product& enterProduct);
+	bool isValidEnterQuantity(const Product& enterProduct);
 
 public:
 	FileView();

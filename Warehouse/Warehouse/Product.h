@@ -20,9 +20,20 @@ private:
 	char* comment;
 
 public:
-	const int MAX_DESCRIPTION_LENGTH = 150;
-	const int MAX_MANUFACTURER_LENGTH = 50;
-	const int MAX_COMMENT_LENGTH = 300;
+	const int MIN_DESCRIPTION = 2;
+	const int MAX_DESCRIPTION = 50;
+
+	const int MIN_MANUFACTURER = 5;
+	const int MAX_MANUFACTURER = 50;
+
+	const int MIN_QUANTITY = 1;
+	const int MAX_QUANTITY = 10;
+
+	const int MIN_LOCATION = 1;
+	const int MAX_LOCATION = 100;
+
+	const int MIN_COMMENT = 2;
+	const int MAX_COMMENT = 200;
 
 	Product();
 	~Product();

@@ -38,7 +38,7 @@ bool FileView::closeView()
 	}
 
 	this->service.setFileName(nullptr);
-	this->service.products = Vector<Product>();
+	this->service.products = List<Product>();
 
 	cout << "Closed successfully" << endl;
 	return true;
@@ -94,7 +94,7 @@ bool FileView::addView() {
 
 	Product product = Product();
 	cout << "Enter product description" << endl;
-	product.setDescription(enterString(product.MAX_DESCRIPTION_LENGTH));
+	product.setDescription(enterString(product.MAX_DESCRIPTION));
 
 	cout << "Enter expiry date time (example: 2021/12/23)" << endl;
 	product.setExpiryDate(enterString(10));
@@ -110,10 +110,10 @@ bool FileView::addView() {
 	}
 
 	cout << "Enter product manufacturer" << endl;
-	product.setManufacturer(enterString(product.MAX_MANUFACTURER_LENGTH));
+	product.setManufacturer(enterString(product.MAX_MANUFACTURER));
 
 	cout << "Enter product comment" << endl;
-	product.setComment(enterString(product.MAX_COMMENT_LENGTH));
+	product.setComment(enterString(product.MAX_COMMENT));
 
 	cout << "Enter product unit (0 for Kilograms , 1 for Liters)" << endl;
 	int unit;
@@ -130,8 +130,19 @@ bool FileView::addView() {
 	cin >> location;
 	product.setLocation(location);
 
-	this->service.addProduct(product);	
-	 return true;
+	if (isValidEnterDescription(product) == false
+		|| isValidEnterManufacturer(product) == false
+		|| isValidEnterManufacturer(product) == false
+		|| isValidEnterComment(product) == false
+		|| isValidEnterLocation(product) == false
+		|| isValidEnterQuantity(product) == false)
+	{
+		return false;
+	}
+	else {
+		this->service.addProduct(product);
+		return true;
+	}
 }
 
 char* FileView::enterString(const size_t length)
@@ -144,6 +155,36 @@ char* FileView::enterString(const size_t length)
 bool FileView::isValidEnterDate(const DateTime& dateTime)
 {
 	return (dateTime.getDay() != 0 || dateTime.getMonth() != 0 || dateTime.getYear() != 0);
+}
+
+bool FileView::isValidEnterDescription(const Product& enterProduct)
+{
+	int length = strlen(enterProduct.getDescription());
+	return (length >= enterProduct.MIN_DESCRIPTION && length <= enterProduct.MAX_DESCRIPTION);
+}
+
+bool FileView::isValidEnterManufacturer(const Product& enterProduct)
+{
+	int length = strlen(enterProduct.getManufacturer());
+	return (length >= enterProduct.MIN_MANUFACTURER && length <= enterProduct.MAX_MANUFACTURER);
+}
+
+bool FileView::isValidEnterComment(const Product& enterProduct)
+{
+	int length = strlen(enterProduct.getComment());
+	return (length >= enterProduct.MIN_COMMENT && length <= enterProduct.MAX_COMMENT);
+}
+
+bool FileView::isValidEnterLocation(const Product& enterProduct)
+{
+	int enterLocation = enterProduct.getLocation();
+	return (enterLocation >= enterProduct.MIN_LOCATION && enterLocation <= enterProduct.MAX_LOCATION);
+}
+
+bool FileView::isValidEnterQuantity(const Product& enterProduct)
+{
+	int enterQuantity = enterProduct.getLocation();
+	return (enterQuantity >= enterProduct.MIN_QUANTITY);
 }
 
 bool FileView :: printView()
