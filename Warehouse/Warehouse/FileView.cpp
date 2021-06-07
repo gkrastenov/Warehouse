@@ -130,7 +130,8 @@ bool FileView::addView() {
 	cin >> location;
 	product.setLocation(location);
 
-	return this->service.addProduct(product);
+	this->service.addProduct(product);	
+	 return true;
 }
 
 char* FileView::enterString(const size_t length)
@@ -142,7 +143,7 @@ char* FileView::enterString(const size_t length)
 
 bool FileView::isValidEnterDate(const DateTime& dateTime)
 {
-	return (dateTime.getDay() == 0 || dateTime.getMonth() == 0 || dateTime.getYear() == 0) == false;
+	return (dateTime.getDay() != 0 || dateTime.getMonth() != 0 || dateTime.getYear() != 0);
 }
 
 bool FileView :: printView()

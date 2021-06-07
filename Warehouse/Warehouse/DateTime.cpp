@@ -120,9 +120,40 @@ DateTime& DateTime::operator = (const DateTime& dateTime) {
 }
 
 bool DateTime::operator < (const DateTime& dateTime) {
-	return (this->getDay() < dateTime.day) 
-		&& (this->getMonth() < dateTime.month)
-		&& (this->getYear() < dateTime.year);
+
+    bool compareYear = this->getYear() < dateTime.year;
+    bool compareMonth = this->getMonth() < dateTime.month;
+    bool compareDay = this->getDay() < dateTime.day;
+
+    if (compareYear)
+    {
+        return true;
+    }
+    if (compareYear && compareMonth)
+    {
+        return true;
+    }
+
+    if (compareYear || compareMonth || compareDay)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+bool DateTime::operator!=(const DateTime& dateTime)
+{
+    return (this->getDay() != dateTime.day)
+        || (this->getMonth() != dateTime.month)
+        || (this->getYear() != dateTime.year);
+}
+
+bool DateTime::operator==(const DateTime& dateTime)
+{
+    return (this->getDay() == dateTime.day)
+        && (this->getMonth() == dateTime.month)
+        && (this->getYear() == dateTime.year);
 }
 
 std::ostream& operator<<(std::ostream& os, DateTime& date)

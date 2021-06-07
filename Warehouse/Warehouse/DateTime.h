@@ -34,8 +34,11 @@ public:
 
 	bool isValidDate(const int year, const int month, const int day);
 
-	DateTime& operator = (const DateTime& date);
-	bool operator < (const DateTime& date);
+	DateTime& operator = (const DateTime& dateTime);
+	bool operator < (const DateTime& dateTime);
+	bool operator != (const DateTime& dateTime);
+	bool operator == (const DateTime& dateTime);
+
 
 	friend std::ostream& operator<<(std::ostream& os, DateTime& date);
 };

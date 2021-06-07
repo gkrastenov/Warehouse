@@ -139,12 +139,6 @@ void FileService::createFile(const char* fileName)
 	ofstream MyFile(fileName);
 }
 
-bool FileService::addProduct(const Product& product)
-{
-	products.push_back(product);
-	return true;
-}
-
 void FileService::getAllProducts() const
 {
 	Vector<Product> availableProducts = readFromFile(fileName);
@@ -162,6 +156,76 @@ void FileService::getAllProducts() const
 		cout << "Location: " << availableProducts[i].getLocation() << endl;
 		cout << "Comment: " << availableProducts[i].getComment() << endl;
 	}
+}
+
+void FileService::addProduct(Product& newProduct)
+{
+	for (size_t i = 0; i < products.getSize(); i++)
+	{
+		// first requirement
+		if (isEqual(products[i].getDescription(), newProduct.getDescription()) 
+		    && products[i].getExpiryDate() != newProduct.getExpiryDate())
+		{
+			if (products[i].getLocation() != newProduct.getLocation())
+			{
+				products.push_back(newProduct);
+				return;
+			}
+			else {
+				int newLocation = newProduct.getLocation();
+				while (newLocation == products[i].getLocation())
+				{
+					std::cout << "Enter new location because this product: " << newProduct.getDescription() << " has equal expiry date" << endl;
+					cin >> newLocation;
+				}
+				newProduct.setLocation(newLocation);
+				products.push_back(newProduct);
+				return;
+			}
+		}
+
+		// second requirement
+		if (isEqual(products[i].getDescription(), newProduct.getDescription())
+			&& products[i].getExpiryDate() == newProduct.getExpiryDate()
+			&& products[i].getQuantity() < MAX_SIZE_QUANTITY)
+		{
+			int sumQuantity = products[i].getQuantity() + newProduct.getQuantity();
+			withBigQuantityProduct(newProduct, sumQuantity);
+		}
+	}
+
+	int sumQuantity = newProduct.getQuantity();
+	withBigQuantityProduct(newProduct, sumQuantity);
+}
+
+void FileService::withBigQuantityProduct(Product& newProduct, int sumQuantity)
+{
+	if (sumQuantity > MAX_SIZE_QUANTITY)
+	{
+		while (sumQuantity > 0)
+		{
+			if (sumQuantity <= MAX_SIZE_QUANTITY)
+			{
+				newProduct.setQuantity(sumQuantity);
+				products.push_back(newProduct);
+				sumQuantity -= MAX_SIZE_QUANTITY;
+			}
+			else {
+				newProduct.setQuantity(MAX_SIZE_QUANTITY);
+				products.push_back(newProduct);
+				sumQuantity -= MAX_SIZE_QUANTITY;
+			}
+		}
+	}
+	else {
+		products.push_back(newProduct);
+		return;
+	}
+}
+
+bool FileService::isEqual(const char* first, const char* second)
+{
+	return strcmp(first, second) == 0;
 }
 
 char* FileService::getFileName() const 
@@ -185,3 +249,4 @@ FileService& FileService::operator=(const FileService& fileService)
 
 	return *this;
 }
+

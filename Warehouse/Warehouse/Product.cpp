@@ -168,10 +168,13 @@ void Product::printProduct()
 
     cout << "Manufacturer: ";
     cout << this->getManufacturer() << endl;
+
     cout << "Unit : ";
     this->printUnit(this->getUnit());
+
     cout << "Quantity : ";
     cout << this->getQuantity() << endl;
+
     cout << "Location : ";
     cout << this->getLocation() << endl;
     cout << "Comment : ";
@@ -181,6 +184,10 @@ void Product::printProduct()
 Product& Product::operator = (const Product& product) {
     if (this != &product)
     {
+        delete[] description;
+        delete[] manufacturer;
+        delete[] comment;
+
         setDescription(product.description);
         setManufacturer(product.manufacturer);
         setExpiryDate(product.expiryDate);

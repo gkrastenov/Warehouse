@@ -8,9 +8,13 @@ private:
 	char* fileName;
 
 	void cleanFile() const;
+	bool isEqual(const char* first, const char* second);
+	void withBigQuantityProduct(Product& newProduct, int sumQuantity);
 
 public:
 	const size_t MAX_SIZE_FILENAME = 50;
+	const int MAX_SIZE_QUANTITY= 10;
+
 
 	Vector<Product> products;
 
@@ -26,8 +30,8 @@ public:
 	bool isFileExist(const char* fileName);
 	bool isOpenFile();
 	void createFile(const char* fileName);
-	bool addProduct(const Product& newProduct);
 	void getAllProducts() const;
+	void addProduct(Product& newProduct);
 
 	FileService& operator = (const FileService& date);
 };
