@@ -51,6 +51,10 @@ void Product::setExpiryDate(const char* expiryDate) {
     this->expiryDate = DateTime(expiryDate);
 }
 
+void Product::setUnit(const Unit unit)
+{
+    this->unit = unit;
+}
 bool Product::setUnit(const int unit)
 {
     if (unit == 0)
@@ -160,7 +164,7 @@ Product& Product::operator = (const Product& product) {
         setQuantity(product.quantity);
         setLocation(product.location);
         setComment(product.comment);
-        setUnit(product.unit);
+        setUnit(product.getUnit());
     }
     return *this;
 }

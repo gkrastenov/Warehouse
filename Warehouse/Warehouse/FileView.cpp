@@ -24,7 +24,7 @@ bool FileView::openView() {
 
 	this->service.setFileName(inputFileName);
 
-	if (service.isFileExist(inputFileName))
+	if (service.isExistsFile(inputFileName))
 	{
 		service.products = service.readFromFile(inputFileName);
 		cout << "Successfully opened " << inputFileName << endl;

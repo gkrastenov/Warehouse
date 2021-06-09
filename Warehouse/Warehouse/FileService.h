@@ -1,6 +1,7 @@
 #pragma once
 #include "List.h"
 #include "Product.h"
+#include "Change.h"
 
 class FileService
 {
@@ -16,6 +17,7 @@ public:
 	const int MAX_FILENAME = 50;
 
 	List<Product> products;
+	List<Change> changes;
 
 	FileService();
 	~FileService();
@@ -25,9 +27,9 @@ public:
 
 	List<Product> readFromFile(const char* fileName) const;
 	bool writeToFile(const char* fileName);
-	void writeToFile(int index[], const int size,const char* fileName);
+	void writeToFile(int index[], const int size, const char* fileName);
 
-	bool isFileExist(const char* fileName);
+	bool isExistsFile(const char* fileName);
 	bool isOpenFile();
 	void createFile(const char* fileName);
 	void getAllProducts() const;

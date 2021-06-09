@@ -168,7 +168,7 @@ void FileService::cleanFile() const
 	ofs.close();
 }
 
-bool FileService::isFileExist(const char* fileName)
+bool FileService::isExistsFile(const char* fileName)
 {
 	std::fstream fileStream;
 	fileStream.open(fileName);

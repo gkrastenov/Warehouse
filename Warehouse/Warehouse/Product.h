@@ -44,6 +44,7 @@ public:
 	void setExpiryDate(const DateTime& expiryDate);
 	void setLocation(const int location);
 	void setComment(const char* comment);
+	void setUnit(const Unit unit);
 	bool setUnit(const int unit);
 	
 	char* getManufacturer() const;
