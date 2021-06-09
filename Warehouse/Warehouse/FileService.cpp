@@ -225,7 +225,7 @@ void FileService::removeProduct(Product& newProduct)
 	{
 		if (indexs.contains(i))
 		{
-			if (products[productWithLessExpiryDateIndex].getExpiryDate() <= products[i].getExpiryDate())
+			if (products[i].getExpiryDate() <= products[productWithLessExpiryDateIndex].getExpiryDate())
 			{
 				productWithLessExpiryDateIndex = i;
 			}

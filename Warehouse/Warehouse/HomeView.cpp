@@ -77,7 +77,6 @@ bool HomeView::menu()
 	{
 		if (fileView.removeView())
 		{
-			cout << "Has been removed new product" << endl;;
 			return true;
 		}
 
