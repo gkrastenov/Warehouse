@@ -7,10 +7,8 @@ using namespace std;
 
 void Product::setDefaultValues()
 {
-    description = nullptr;
     manufacturer = nullptr;
-    unit = Unknown;
-    quantity = 0;
+    unit = Unit::Unknown;
     location = 0;
     comment = nullptr;
 }
@@ -22,17 +20,10 @@ Product::Product()
 
 Product::~Product()
 {
-    delete[] description;
     delete[] manufacturer;
     delete[] comment;
 
     setDefaultValues();
-}
-
-void Product::setDescription(const char* description) {
-    size_t lengthDescription = strlen(description) + 1;
-    this->description = new char[lengthDescription];
-    strcpy_s(this->description, lengthDescription, description);
 }
 
 void Product::setManufacturer(const char* manufacturer) {
@@ -47,10 +38,6 @@ void Product::setComment(const char* comment) {
     strcpy_s(this->comment, lengthComment, comment);
 }
 
-void Product::setQuantity(const int quantity) {
-    this->quantity = quantity;
-}
-
 void Product::setLocation(const int location) {
     this->location = location;
 }
@@ -59,38 +46,26 @@ void Product::setExpiryDate(const DateTime& expiryDate) {
     this->expiryDate = expiryDate;
 }
 
-void Product::setEntryDate(const DateTime& entryDate) {
-    this->entryDate = entryDate;
-}
-
 void Product::setExpiryDate(const char* expiryDate) {
    
     this->expiryDate = DateTime(expiryDate);
-}
-
-void Product::setEntryDate(const char* entryDate) {
-    
-    this->entryDate = DateTime(entryDate);
 }
 
 bool Product::setUnit(const int unit)
 {
     if (unit == 0)
     {
-        this->unit = Kilograms;
+        this->unit = Unit::Kilograms;
         return true;
     }
     if (unit == 1)
     {
-        this->unit = Liters;
+        this->unit = Unit::Liters;
         return true;
     }
-    this->unit = Unknown;
-    return false;
-}
 
-char* Product::getDescription() const { 
-    return this->description;
+    this->unit = Unit::Unknown;
+    return false;
 }
 
 char* Product::getManufacturer() const {
@@ -99,14 +74,6 @@ char* Product::getManufacturer() const {
 
 DateTime& Product::getExpiryDate(){
     return this->expiryDate;
-}
-
-DateTime& Product::getEntryDate() {
-    return this->entryDate;
-}
-
-int Product::getQuantity() const {
-    return this->quantity;
 }
 
 int Product::getLocation() const {
@@ -120,10 +87,10 @@ char* Product::getComment() const {
 int Product::unitToNumber(const Unit unit) {
     switch (unit)
     {
-      case Kilograms:
+    case Unit::Kilograms:
         return 0;
 
-      case Liters:
+      case Unit::Liters:
           return 1;
 
     default:
@@ -134,11 +101,11 @@ int Product::unitToNumber(const Unit unit) {
 void Product::printUnit(const Unit unit) {
     switch (unit)
     {
-    case Kilograms:
+    case Unit::Kilograms:
         std::cout << "Kilograms" << std::endl;
         break;
 
-    case Liters:
+    case Unit::Liters:
         std::cout << "Liters" << std::endl;
         break;
 
@@ -184,11 +151,9 @@ void Product::print()
 Product& Product::operator = (const Product& product) {
     if (this != &product)
     {
-        delete[] description;
         delete[] manufacturer;
         delete[] comment;
 
-        setDescription(product.description);
         setManufacturer(product.manufacturer);
         setExpiryDate(product.expiryDate);
         setEntryDate(product.entryDate);

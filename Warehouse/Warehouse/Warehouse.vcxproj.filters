@@ -34,6 +34,12 @@
     <ClCompile Include="List.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Change.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DateTime.h">
@@ -52,5 +58,11 @@
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="..\Warehouse.Tests\doctest.h" />
+    <ClInclude Include="Change.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
