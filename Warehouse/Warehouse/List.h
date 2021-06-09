@@ -104,6 +104,39 @@ public:
         data[size++] = newElem;
     }
 
+    List<T> remove(List<T> list, const T& elem)
+    {
+        List<T> newList = List<T>();
+        newList.size = list.getSize() - 1;
+        newList.capacity = list.getCapacity();
+
+        newList.data = new T[list.getSize - 1];
+
+        for (size_t i = 0; i < list.getSize(); i++)
+        {
+            if (list.data[i] == elem)
+            {
+                continue;
+            }
+
+            newList.data[i] = list.data[i];
+        }
+
+        return newList;
+    }
+
+    bool contains(const T& elem) const
+    {
+        for (size_t i = 0; i < this->getSize(); i++)
+        {
+            if (data[i] == elem)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
     void copy(const List<T>& others)
     {
         capacity = others.capacity;

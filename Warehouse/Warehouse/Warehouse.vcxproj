@@ -144,9 +144,9 @@
     <ClCompile Include="File.cpp" />
     <ClCompile Include="FileService.cpp" />
     <ClCompile Include="HomeView.cpp" />
+    <ClCompile Include="List.cpp" />
     <ClCompile Include="Product.cpp" />
     <ClCompile Include="ProductView.cpp" />
-    <ClCompile Include="List.cpp" />
     <ClCompile Include="Warehouse.cpp" />
   </ItemGroup>
   <ItemGroup>

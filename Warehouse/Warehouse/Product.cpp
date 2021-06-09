@@ -5,7 +5,7 @@
 #include "Product.h"
 using namespace std;
 
-Product::Product()
+void Product::setDefaultValues()
 {
     description = nullptr;
     manufacturer = nullptr;
@@ -15,18 +15,18 @@ Product::Product()
     comment = nullptr;
 }
 
+Product::Product()
+{
+    setDefaultValues();
+}
+
 Product::~Product()
 {
     delete[] description;
     delete[] manufacturer;
     delete[] comment;
 
-    description = nullptr;
-    manufacturer = nullptr;
-    unit = Unknown;
-    quantity = 0;
-    location = 0;
-    comment = nullptr;
+    setDefaultValues();
 }
 
 void Product::setDescription(const char* description) {
@@ -198,4 +198,11 @@ Product& Product::operator = (const Product& product) {
         setUnit(product.unit);
     }
     return *this;
+}
+
+bool Product::operator==(const Product& product)
+{
+    return strcmp(this->getDescription(), product.getDescription()) == 0
+        && strcmp(this->getManufacturer(), product.getManufacturer()) == 0
+        && strcmp(this->getComment(), product.getComment()) == 0;
 }

@@ -35,7 +35,7 @@ FileService::~FileService()
 
 List<Product> FileService::readFromFile(const char* fileName) const
 {
-	List<Product> productsFromFile = List<Product>();
+	List<Product> productsFromFile;
 
 	ifstream file(fileName);
 
@@ -50,7 +50,7 @@ List<Product> FileService::readFromFile(const char* fileName) const
 
 	while (!file.eof())
 	{
-		Product currentProduct = Product();
+		Product currentProduct;
 
 		file >> descriptionLine;
 
@@ -88,7 +88,7 @@ List<Product> FileService::readFromFile(const char* fileName) const
 	return productsFromFile;
 }
 
-bool FileService::writeToFile(const char* fileName) const
+bool FileService::writeToFile(const char* fileName)
 {
 	cleanFile();
 
@@ -115,6 +115,39 @@ bool FileService::writeToFile(const char* fileName) const
 
 	myfile.close();
 	return true;
+}
+
+void FileService::writeToFile(int index[], const int size, const char* fileName)
+{
+	cleanFile();
+
+	ofstream myfile;
+	myfile.open(fileName);
+
+	for (size_t i = 0; i < products.getSize(); i++)
+	{
+		if (contains(index, size, i))
+		{
+			// TODO : print info for product
+			continue;
+		}
+		Product currentProduct = products[i];
+
+		DateTime expiryDate = currentProduct.getExpiryDate();
+		DateTime entryDate = currentProduct.getEntryDate();
+
+		// add product to file
+		myfile << currentProduct.getDescription()
+			<< " " << expiryDate.getYear() << '/' << expiryDate.getMonth() << '/' << expiryDate.getDay()
+			<< " " << entryDate.getYear() << '/' << entryDate.getMonth() << '/' << entryDate.getDay()
+			<< " " << currentProduct.getManufacturer()
+			<< " " << currentProduct.unitToNumber(currentProduct.getUnit())
+			<< " " << currentProduct.getQuantity()
+			<< " " << currentProduct.getLocation()
+			<< " " << currentProduct.getComment() << endl;
+	}
+
+	myfile.close();
 }
 
 void FileService::cleanFile() const
@@ -220,6 +253,24 @@ void FileService::addProduct(Product& newProduct)
 
 void FileService::cleanProducts(const DateTime& dateTime)
 {
+	int index[20];
+	int size = 0;
+
+	for (size_t i = 0; i < this->products.getSize(); i++)
+	{
+		if (products[i].getExpiryDate() <= dateTime)
+		{
+			index[size] = i;
+			size++;
+		}
+	}
+
+    writeToFile(index, size, this->fileName);
+
+	List<Product> test = readFromFile(this->fileName);
+	products.copy(test);
+
+	std::cout << "Cleaned successfully" << endl;
 }
 
 void FileService::withBigQuantityProduct(Product& newProduct, int sumQuantity)
@@ -246,6 +297,19 @@ void FileService::withBigQuantityProduct(Product& newProduct, int sumQuantity)
 		products.add(newProduct);
 		return;
 	}
+}
+
+bool FileService::contains(int index[], int size, int elem)
+{
+	for (size_t i = 0; i < size; i++)
+	{
+		if (index[i] == elem)
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
 
 bool FileService::isEqual(const char* first, const char* second)

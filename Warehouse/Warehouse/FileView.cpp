@@ -17,9 +17,10 @@ FileView::FileView() {
 
 bool FileView::openView() {
 	cout << "Enter file name (Example: file2.txt)" << endl;
+	cin.ignore();
 
 	char inputFileName[50];
-	cin.getline(inputFileName, 50);
+	cin >> inputFileName;
 	
 	this->service.setFileName(inputFileName);
 
@@ -168,6 +169,11 @@ bool FileView::addView() {
 	}
 }
 
+bool FileView::removeView()
+{
+	return false;
+}
+
 bool FileView::printView()
 {
 	if (this->service.isOpenFile() == false)
@@ -181,13 +187,17 @@ bool FileView::printView()
 
 bool FileView::cleanView()
 {
-	cout << "Cleanning: " << endl;
+	if (this->service.isOpenFile() == false)
+	{
+		return true;
+	}
+
+	cout << "Cleanning..... " << endl;
 
 	std::time_t time = std::time(0);   // get time now
 	std::tm* now = std::localtime(&time);
 	DateTime dateNow = DateTime((now->tm_year + 1900), (now->tm_mon + 1), now->tm_mday);
 
-	cout << "Cleanning: " << endl;
 	this->service.cleanProducts(dateNow);
 
 	return true;

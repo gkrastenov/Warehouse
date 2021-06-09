@@ -26,6 +26,7 @@ public:
 	bool helpView();
 	bool exitView();
 	bool addView();
+	bool removeView();
 	bool printView();
 	bool cleanView();
 };

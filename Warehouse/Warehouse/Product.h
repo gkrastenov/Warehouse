@@ -1,5 +1,6 @@
 #pragma once
 #include "DateTime.h"
+
 enum Unit
 {
 	Kilograms,
@@ -18,6 +19,8 @@ private:
 	int quantity;
 	int location;
 	char* comment;
+
+	void setDefaultValues();
 
 public:
 	const int MIN_DESCRIPTION = 2;
@@ -63,4 +66,5 @@ public:
 	void printProduct();
 
 	Product& operator = (const Product& product);
+	bool operator == (const Product& product);
 };

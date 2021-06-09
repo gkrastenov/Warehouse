@@ -18,8 +18,9 @@ void HomeView::menuView()
 	cout << "Save As (saveAs)" << endl;
 	cout << "Help (help)" << endl;
 	cout << "-------- Warehouse commands --------" << endl;
-	cout << "Add (add)" << endl;
 	cout << "Print (print)" << endl;
+	cout << "Add (add)" << endl;
+	cout << "Remove (remove)" << endl;
 	cout << "Clean (clean)" << endl;
 	cout << "Exit (exit)" << endl;
 	cout << "Enter next command: " << endl;
@@ -31,7 +32,8 @@ bool HomeView::menu()
 
 
 	char consoleCommand[20];
-	cin.getline(consoleCommand, 20);
+	cin >> consoleCommand;
+	// cin.getline(consoleCommand, 20);
 
 	// File commands
 	if (compareStrings(consoleCommand, "open", getSize(consoleCommand), 4))
@@ -64,11 +66,23 @@ bool HomeView::menu()
 	{
 		if (fileView.addView())
 		{
-			cout << "has been added new product" << endl;;
+			cout << "Has been added new product" << endl;;
 			return true;
 		}
 
 		cout << "Has not been added new product" << endl;;
+		return true;
+	}
+
+	if (compareStrings(consoleCommand, "add", getSize(consoleCommand), 3))
+	{
+		if (fileView.addView())
+		{
+			cout << "Has been removed new product" << endl;;
+			return true;
+		}
+
+		cout << "Has not been removed new product" << endl;;
 		return true;
 	}
 

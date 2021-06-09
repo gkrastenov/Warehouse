@@ -119,7 +119,7 @@ public:
         return size == 0;
     }
 
-    void push_back(const T& newElem)
+    void add(const T& newElem)
     {
         if (size == capacity)
         {
@@ -128,7 +128,7 @@ public:
         data[size++] = newElem;
     }
 
-    void pop_back()
+    void remove()
     {
         T* toDelete = data[size - 1];
         delete toDelete;

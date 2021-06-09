@@ -1,5 +1,5 @@
 #pragma once
-#include "Vector.h"
+#include "List.h"
 #include "Product.h"
 
 class FileService
@@ -10,6 +10,7 @@ private:
 	void cleanFile() const;
 	bool isEqual(const char* first, const char* second);
 	void withBigQuantityProduct(Product& newProduct, int sumQuantity);
+	bool contains(int index[], int size, int elem);
 
 public:
 	const int MAX_FILENAME = 50;
@@ -24,6 +25,7 @@ public:
 
 	List<Product> readFromFile(const char* fileName) const;
 	bool writeToFile(const char* fileName);
+	void writeToFile(int index[], const int size,const char* fileName);
 
 	bool isFileExist(const char* fileName);
 	bool isOpenFile();

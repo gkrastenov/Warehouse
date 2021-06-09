@@ -38,7 +38,7 @@ public:
 	bool operator < (const DateTime& dateTime);
 	bool operator != (const DateTime& dateTime);
 	bool operator == (const DateTime& dateTime);
-
+	bool operator <= (const DateTime& dateTime);
 
 	friend std::ostream& operator<<(std::ostream& os, DateTime& date);
 };

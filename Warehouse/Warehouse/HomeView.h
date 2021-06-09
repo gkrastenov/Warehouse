@@ -1,5 +1,6 @@
 #pragma once
 #include "FileView.h"
+
 class HomeView
 {
 private:
@@ -14,4 +15,3 @@ public:
 
 	bool menu();
 };
-
