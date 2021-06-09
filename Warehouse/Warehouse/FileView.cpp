@@ -45,10 +45,10 @@ bool FileView::closeView()
 	{
 		return true;
 	}
-
-	this->service.setFileName(nullptr);
-	this->service.products = List<Product>();
-
+	
+	List<Product> emptyList;
+	service.products.copy(emptyList);
+	service.setFileName("");
 	cout << "Closed successfully" << endl;
 	return true;
 }

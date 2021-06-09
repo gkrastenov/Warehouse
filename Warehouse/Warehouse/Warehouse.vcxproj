@@ -148,6 +148,7 @@
     <ClCompile Include="Warehouse.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Warehouse.Tests\doctest.h" />
     <ClInclude Include="FileView.h" />
     <ClInclude Include="DateTime.h" />
     <ClInclude Include="FileService.h" />

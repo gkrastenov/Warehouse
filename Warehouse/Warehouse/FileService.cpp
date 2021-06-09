@@ -13,7 +13,7 @@ using namespace std;
 
 bool FileService::isOpenFile()
 {
-	if (this->fileName == nullptr)
+	if (this->fileName == nullptr || strcmp(this->fileName, "") == 0)
 	{
 		cout << "Please open/create file to work with him" << endl;
 		return false;

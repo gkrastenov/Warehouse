@@ -51,5 +51,6 @@
     <ClInclude Include="FileView.h">
       <Filter>Views</Filter>
     </ClInclude>
+    <ClInclude Include="..\Warehouse.Tests\doctest.h" />
   </ItemGroup>
 </Project>
