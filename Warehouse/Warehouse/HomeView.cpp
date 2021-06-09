@@ -89,7 +89,7 @@ bool HomeView::menu()
 		return false;
 	}
 
-	if (strcmp(consoleCommand, "exit") == 0)
+	if (strcmp(consoleCommand, "print") == 0)
 	{
 		return fileView.printView();
 	}
