@@ -8,6 +8,7 @@
 #include "File.h"
 
 #pragma warning(disable : 4996)
+
 using namespace std;
 
 File::File()
@@ -105,13 +106,6 @@ bool File::print()
 	return true;
 }
 
-bool File::exit()
-{
-	cout << "Exit successfully." << endl;
-	return false;
-}
-
-
 bool File::isExists(const char* fileName)
 {
 	fstream fileStream;
@@ -151,7 +145,7 @@ bool File::clean()
 	int index = 0;
 	while (index<count)
 	{
-		if (products[index].getExpiryDate() <= dateNow)
+		if (products[index].getExpiryDate() < dateNow)
 		{
 			cout << "Product: " << endl;
 			products[index].printProduct();

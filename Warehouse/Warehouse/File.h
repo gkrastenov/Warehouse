@@ -22,7 +22,6 @@ public:
 	void initialCreate();
 	void removeProduct(const size_t index);
 	bool print();
-	bool exit();
 	bool saveAs();
 	bool clean();
 
