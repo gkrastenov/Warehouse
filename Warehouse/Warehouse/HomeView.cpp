@@ -35,33 +35,33 @@ bool HomeView::menu()
 	cin.ignore();
 
 	// File commands
-	if (compareStrings(consoleCommand, "open", getSize(consoleCommand), 4))
+	if (strcmp(consoleCommand, "open") == 0)
 	{
 		return fileView.openView();
 	}
 
-	if (compareStrings(consoleCommand, "close", getSize(consoleCommand), 5))
+	if (strcmp(consoleCommand, "close") == 0)
 	{
 		return fileView.closeView();
 	}
 
-	if (compareStrings(consoleCommand, "help", getSize(consoleCommand), 4))
+	if (strcmp(consoleCommand, "help") == 0)
 	{
 		return fileView.helpView();
 	}
 
-	if (compareStrings(consoleCommand, "saveAs", getSize(consoleCommand), 6))
+	if (strcmp(consoleCommand, "saveAs") == 0)
 	{
 		return fileView.saveAsView();;
 	}
 
-	if (compareStrings(consoleCommand, "save", getSize(consoleCommand), 4))
+	if (strcmp(consoleCommand, "save") == 0)
 	{
 		return fileView.saveView();
 	}
 
 	// Product Commands
-	if (compareStrings(consoleCommand, "add", getSize(consoleCommand), 3))
+	if (strcmp(consoleCommand, "add") == 0)
 	{
 		if (fileView.addView())
 		{
@@ -73,7 +73,7 @@ bool HomeView::menu()
 		return true;
 	}
 
-	if (compareStrings(consoleCommand, "remove", getSize(consoleCommand), 6))
+	if (strcmp(consoleCommand, "remove") == 0)
 	{
 		if (fileView.removeView())
 		{
@@ -85,51 +85,21 @@ bool HomeView::menu()
 		return true;
 	}
 
-	if (compareStrings(consoleCommand, "exit", getSize(consoleCommand), 4))
+	if (strcmp(consoleCommand, "exit") == 0)
 	{
 		return false;
 	}
 
-	if (compareStrings(consoleCommand, "print", getSize(consoleCommand), 5))
+	if (strcmp(consoleCommand, "exit") == 0)
 	{
 		return fileView.printView();
 	}
 
-	if (compareStrings(consoleCommand, "clean", getSize(consoleCommand), 5))
+	if (strcmp(consoleCommand, "clean") == 0)
 	{
 		return fileView.cleanView();
 	}
 
 	cout << "Invalid command" << endl;
 	return true;
-}
-
-bool HomeView::compareStrings(const char* input, const char* source,
-	const size_t inputSize, const size_t commandSize)
-{
-	if (inputSize != commandSize)
-	{
-		return false;
-	}
-
-	for (size_t i = 0; i < commandSize; i++)
-	{
-		if (input[i] != source[i])
-		{
-			return false;
-		}
-	}
-
-	return true;
-}
-
-size_t HomeView::getSize(const char* source)
-{
-	int index = 0;
-	while (source[index] != '\0')
-	{
-		index++;
-	}
-
-	return index;
 }
