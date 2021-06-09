@@ -30,10 +30,9 @@ bool HomeView::menu()
 {
 	menuView();
 
-
 	char consoleCommand[20];
 	cin >> consoleCommand;
-	// cin.getline(consoleCommand, 20);
+	cin.ignore();
 
 	// File commands
 	if (compareStrings(consoleCommand, "open", getSize(consoleCommand), 4))
@@ -74,9 +73,9 @@ bool HomeView::menu()
 		return true;
 	}
 
-	if (compareStrings(consoleCommand, "add", getSize(consoleCommand), 3))
+	if (compareStrings(consoleCommand, "remove", getSize(consoleCommand), 6))
 	{
-		if (fileView.addView())
+		if (fileView.removeView())
 		{
 			cout << "Has been removed new product" << endl;;
 			return true;

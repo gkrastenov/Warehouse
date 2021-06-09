@@ -31,6 +31,7 @@ public:
 	bool isOpenFile();
 	void createFile(const char* fileName);
 	void getAllProducts() const;
+	void removeProduct(Product& newProduct);
 	void addProduct(Product& newProduct);
 	void cleanProducts(const DateTime& dateTime);
 

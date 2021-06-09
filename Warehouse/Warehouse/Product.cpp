@@ -152,7 +152,7 @@ Unit Product::getUnit() const {
     return unit;
 }
 
-void Product::printProduct()
+void Product::print()
 {
     cout << "Description : " << this->getDescription() << endl;
 

@@ -97,7 +97,16 @@ bool FileService::writeToFile(const char* fileName)
 
 	for (size_t i = 0; i < products.getSize(); i++)
 	{
+
 		Product currentProduct = products[i];
+
+		if (currentProduct.getQuantity() == 0)
+		{
+			cout << "Has been removed product " << currentProduct.getDescription() 
+				 << " with quntity "<< currentProduct.getQuantity()
+				 << " in location" << currentProduct.getLocation() << endl;
+			continue;
+		}
 
 		DateTime expiryDate = currentProduct.getExpiryDate();
 		DateTime entryDate = currentProduct.getEntryDate();
@@ -128,7 +137,9 @@ void FileService::writeToFile(int index[], const int size, const char* fileName)
 	{
 		if (contains(index, size, i))
 		{
-			// TODO : print info for product
+			cout << "It has been cleaned product: " << endl;
+			products[i].print();
+
 			continue;
 		}
 		Product currentProduct = products[i];
@@ -190,6 +201,59 @@ void FileService::getAllProducts() const
 		cout << "Comment: " << availableProducts[i].getComment() << endl;
 	}
 }
+
+void FileService::removeProduct(Product& newProduct)
+{
+	List<int> indexs;
+	for (size_t i = 0; i < products.getSize(); i++)
+	{
+		if (isEqual(products[i].getDescription(), newProduct.getDescription()))
+		{
+			indexs.add(i);
+		}
+	}
+
+	if (indexs.getSize() <= 0)
+	{
+		return;
+	}
+
+	// remove second requirement 
+	int productWithLessExpiryDateIndex = indexs[0];
+
+	for (size_t i = 0; i < products.getSize(); i++)
+	{
+		if (indexs.contains(i))
+		{
+			if (products[productWithLessExpiryDateIndex].getExpiryDate() <= products[i].getExpiryDate())
+			{
+				productWithLessExpiryDateIndex = i;
+			}
+		}
+	}
+
+	// remove third requirement 
+	if (products[productWithLessExpiryDateIndex].getQuantity() < newProduct.getQuantity())
+	{
+		cout << "This product is a smaller quantity " << endl;
+		cout << "Description: " << products[productWithLessExpiryDateIndex].getDescription() << endl;;
+		cout << "Quantity: " << products[productWithLessExpiryDateIndex].getQuantity() << endl;
+		cout << "ExpiryDate: " << products[productWithLessExpiryDateIndex].getExpiryDate() << endl;
+
+		cout << "Enter true to be removed all quantity and false to be skipped (true/false)" << endl;
+		char command[20];
+		cin >> command;
+		if (strcmp(command, "true") == 0)
+		{
+			products[productWithLessExpiryDateIndex].setQuantity(0);
+		}
+	}
+	else {
+		int newQuantity = products[productWithLessExpiryDateIndex].getQuantity() - newProduct.getQuantity();
+		products[productWithLessExpiryDateIndex].setQuantity(newQuantity);
+	}
+}
+
 
 void FileService::addProduct(Product& newProduct)
 {

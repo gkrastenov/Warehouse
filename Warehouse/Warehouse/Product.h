@@ -63,7 +63,7 @@ public:
 
 	int unitToNumber(const Unit unit);
 	void printUnit(const Unit unit);
-	void printProduct();
+	void print();
 
 	Product& operator = (const Product& product);
 	bool operator == (const Product& product);

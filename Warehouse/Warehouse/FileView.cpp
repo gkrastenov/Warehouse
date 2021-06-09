@@ -17,11 +17,11 @@ FileView::FileView() {
 
 bool FileView::openView() {
 	cout << "Enter file name (Example: file2.txt)" << endl;
-	cin.ignore();
 
 	char inputFileName[50];
 	cin >> inputFileName;
-	
+	cin.ignore();
+
 	this->service.setFileName(inputFileName);
 
 	if (service.isFileExist(inputFileName))
@@ -171,7 +171,29 @@ bool FileView::addView() {
 
 bool FileView::removeView()
 {
-	return false;
+	if (this->service.isOpenFile() == false)
+	{
+		return true;
+	}
+
+	Product product = Product();
+
+	cout << "Enter product description" << endl;
+	product.setDescription(enterString(product.MAX_DESCRIPTION));
+
+	cout << "Enter quantity:" << endl;
+	int quantity;
+	cin >> quantity;
+	product.setQuantity(quantity);
+
+	if (isValidEnterDescription(product) == false
+		|| isValidEnterQuantity(product) == false)
+	{
+		return false;
+	}
+	
+	this->service.removeProduct(product);
+	return true;
 }
 
 bool FileView::printView()
@@ -241,6 +263,6 @@ bool FileView::isValidEnterLocation(const Product& enterProduct)
 
 bool FileView::isValidEnterQuantity(const Product& enterProduct)
 {
-	int enterQuantity = enterProduct.getLocation();
+	int enterQuantity = enterProduct.getQuantity();
 	return (enterQuantity >= enterProduct.MIN_QUANTITY);
 }
