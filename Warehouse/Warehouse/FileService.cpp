@@ -7,8 +7,9 @@
 #include <string>
 #include <chrono>
 #include <ctime>  
-#include "File.h"
 
+// for getting date now
+#pragma warning(disable : 4996)
 using namespace std;
 
 bool FileService::isOpenFile()
@@ -33,7 +34,7 @@ FileService::~FileService()
 	this->fileName = nullptr;
 }
 
-List<Product> FileService::readFromFile(const char* fileName) const
+List<Product> FileService::readProductsFromFile(const char* fileName) const
 {
 	List<Product> productsFromFile;
 
@@ -88,9 +89,48 @@ List<Product> FileService::readFromFile(const char* fileName) const
 	return productsFromFile;
 }
 
-bool FileService::writeToFile(const char* fileName)
+List<Change> FileService::readChangesFromFile() const
 {
-	cleanFile();
+	List<Change> changesFromFile;
+
+	ifstream file(LOG_FILENAME);
+
+	char descriptionLine[50];
+	char entryDateLine[30];
+	int changeTypeLine;
+	int  qantityLine;
+
+	while (!file.eof())
+	{
+		Change currentChange;
+
+		file >> entryDateLine;
+
+		if (entryDateLine[0] == '\0')
+		{
+			break;
+		}
+		currentChange.setEntryDate(entryDateLine);
+
+		file >> changeTypeLine;
+		currentChange.setChangeType(changeTypeLine);
+
+		file >> descriptionLine;
+		currentChange.setDescription(descriptionLine);
+
+		file >> qantityLine;
+		currentChange.setQuantity(qantityLine);
+
+		changesFromFile.add(currentChange);
+	}
+
+	file.close();
+	return changesFromFile;
+}
+
+bool FileService::writeProductsToFile(const char* fileName)
+{
+	cleanFile(fileName);
 
 	ofstream myfile;
 	myfile.open(fileName);
@@ -98,13 +138,14 @@ bool FileService::writeToFile(const char* fileName)
 	for (size_t i = 0; i < products.getSize(); i++)
 	{
 
-		Product currentProduct = products[i];
+		Product currentProduct(products[i]);
 
 		if (currentProduct.getQuantity() == 0)
 		{
-			cout << "Has been removed product " << currentProduct.getDescription() 
+			cout << "Has been removed product " << currentProduct.getDescription()
 				 << " with quntity "<< currentProduct.getQuantity()
-				 << " in location" << currentProduct.getLocation() << endl;
+				 << " in location " << currentProduct.getLocation() << endl;
+
 			continue;
 		}
 
@@ -113,8 +154,8 @@ bool FileService::writeToFile(const char* fileName)
 
 		// add product to file
 		myfile << currentProduct.getDescription()
-			<< " " << expiryDate.getYear() << '/' << expiryDate.getMonth() << '/' << expiryDate.getDay()
-			<< " " << entryDate.getYear() << '/' << entryDate.getMonth() << '/' << entryDate.getDay()
+			<< " " << expiryDate
+			<< " " << entryDate
 			<< " " << currentProduct.getManufacturer()
 			<< " " << currentProduct.unitToNumber(currentProduct.getUnit())
 			<< " " << currentProduct.getQuantity()
@@ -126,31 +167,60 @@ bool FileService::writeToFile(const char* fileName)
 	return true;
 }
 
-void FileService::writeToFile(int index[], const int size, const char* fileName)
+void FileService::writeChangesToFile()
 {
-	cleanFile();
+	cleanFile(LOG_FILENAME);
+
+	ofstream myfile;
+	myfile.open(LOG_FILENAME);
+
+	for (size_t i = 0; i < changes.getSize(); i++)
+	{
+		// add change to file
+		DateTime entryDate = changes[i].getEntryDate();
+
+		myfile << entryDate
+			<< " " << changes[i].changeTypeToInt(changes[i].getChangeType())
+			<< " " << changes[i].getDescription()
+			<< " " << changes[i].getQuantity() << endl;
+	}
+
+	myfile.close();
+}
+
+void FileService::writeProductsToFile(int index[], const int size, const char* fileName)
+{
+	cleanFile(fileName);
 
 	ofstream myfile;
 	myfile.open(fileName);
 
 	for (size_t i = 0; i < products.getSize(); i++)
 	{
+		Product currentProduct(products[i]);
 		if (contains(index, size, i))
 		{
 			cout << "It has been cleaned product: " << endl;
-			products[i].print();
+			currentProduct.print();
+
+			// get time now
+			std::time_t time = std::time(0);
+			std::tm* now = std::localtime(&time);
+			DateTime dateNow = DateTime((now->tm_year + 1900), (now->tm_mon + 1), now->tm_mday);
+
+			Change newChange = Change(currentProduct.getDescription(), currentProduct.getQuantity(), dateNow, ChangeType::Clean);
+			changes.add(newChange);
 
 			continue;
 		}
-		Product currentProduct = products[i];
 
 		DateTime expiryDate = currentProduct.getExpiryDate();
 		DateTime entryDate = currentProduct.getEntryDate();
 
 		// add product to file
 		myfile << currentProduct.getDescription()
-			<< " " << expiryDate.getYear() << '/' << expiryDate.getMonth() << '/' << expiryDate.getDay()
-			<< " " << entryDate.getYear() << '/' << entryDate.getMonth() << '/' << entryDate.getDay()
+			<< " " << expiryDate
+			<< " " << entryDate
 			<< " " << currentProduct.getManufacturer()
 			<< " " << currentProduct.unitToNumber(currentProduct.getUnit())
 			<< " " << currentProduct.getQuantity()
@@ -161,7 +231,7 @@ void FileService::writeToFile(int index[], const int size, const char* fileName)
 	myfile.close();
 }
 
-void FileService::cleanFile() const
+void FileService::cleanFile(const char* fileName)
 {
 	ofstream ofs;
 	ofs.open(fileName, std::ofstream::trunc);
@@ -185,7 +255,7 @@ void FileService::createFile(const char* fileName)
 
 void FileService::getAllProducts() const
 {
-	List<Product> availableProducts = readFromFile(fileName);
+	List<Product> availableProducts = readProductsFromFile(fileName);
 
 	for (size_t i = 0; i < availableProducts.getSize(); i++)
 	{
@@ -207,7 +277,7 @@ void FileService::removeProduct(Product& newProduct)
 	List<int> indexs;
 	for (size_t i = 0; i < products.getSize(); i++)
 	{
-		if (isEqual(products[i].getDescription(), newProduct.getDescription()))
+		if (products[i].getDescription() == newProduct.getDescription())
 		{
 			indexs.add(i);
 		}
@@ -252,21 +322,31 @@ void FileService::removeProduct(Product& newProduct)
 		int newQuantity = products[productWithLessExpiryDateIndex].getQuantity() - newProduct.getQuantity();
 		products[productWithLessExpiryDateIndex].setQuantity(newQuantity);
 	}
+
+	// get time now
+	std::time_t time = std::time(0);
+	std::tm* now = std::localtime(&time);
+	DateTime dateNow = DateTime((now->tm_year + 1900), (now->tm_mon + 1), now->tm_mday);
+
+	Change newChange = Change(newProduct.getDescription(), newProduct.getQuantity(), dateNow, ChangeType::Remove);
+	changes.add(newChange);
 }
 
 
-void FileService::addProduct(Product& newProduct)
+List<Product> FileService::addProduct(Product& newProduct)
 {
+	List<Product> list(products);
+
 	for (size_t i = 0; i < products.getSize(); i++)
 	{
 		// first requirement
-		if (isEqual(products[i].getDescription(), newProduct.getDescription()) 
+		if (products[i].getDescription() ==  newProduct.getDescription() 
 		    && products[i].getExpiryDate() != newProduct.getExpiryDate())
 		{
 			if (products[i].getLocation() != newProduct.getLocation())
 			{
-				withBigQuantityProduct(newProduct, newProduct.getQuantity());
-				return;
+				withBigQuantityProduct(list, newProduct, newProduct.getQuantity());
+				return list;
 			}
 			else {
 
@@ -278,13 +358,13 @@ void FileService::addProduct(Product& newProduct)
 				}
 
 				newProduct.setLocation(newLocation);
-				withBigQuantityProduct(newProduct, newProduct.getQuantity());
-				return;
+				withBigQuantityProduct(list, newProduct, newProduct.getQuantity());
+				return list;
 			}
 		}
 
 		// second requirement
-		if (isEqual(products[i].getDescription(), newProduct.getDescription())
+		if (products[i].getDescription() == newProduct.getDescription()
 			&& products[i].getExpiryDate() == newProduct.getExpiryDate()
 			&& products[i].getQuantity() < newProduct.MAX_QUANTITY)
 		{
@@ -292,7 +372,7 @@ void FileService::addProduct(Product& newProduct)
 			if (sumQuantity <= 10)
 			{
 				products[i].setQuantity(sumQuantity);
-				return;
+				return list;
 			}
 			else {
 				products[i].setQuantity(newProduct.MAX_QUANTITY);
@@ -305,14 +385,24 @@ void FileService::addProduct(Product& newProduct)
 					newProduct.setLocation(newLocation);
 				}
 
-				withBigQuantityProduct(newProduct, sumQuantity - 10);
-				return;
+				withBigQuantityProduct(list, newProduct, sumQuantity - 10);
+				return list;
 			}
 		}
 	}
 
 	int sumQuantity = newProduct.getQuantity();
-	withBigQuantityProduct(newProduct, sumQuantity);
+	withBigQuantityProduct(list, newProduct, sumQuantity);
+
+	// get time now
+	std::time_t time = std::time(0);
+	std::tm* now = std::localtime(&time);
+	DateTime dateNow = DateTime((now->tm_year + 1900), (now->tm_mon + 1), now->tm_mday);
+
+	Change newChange = Change(newProduct.getDescription(), newProduct.getQuantity(), dateNow, ChangeType::Add);
+	changes.add(newChange);
+
+	return list;
 }
 
 void FileService::cleanProducts(const DateTime& dateTime)
@@ -329,15 +419,13 @@ void FileService::cleanProducts(const DateTime& dateTime)
 		}
 	}
 
-    writeToFile(index, size, this->fileName);
-
-	List<Product> test = readFromFile(this->fileName);
-	products.copy(test);
+    writeProductsToFile(index, size, this->fileName);
+	products.copy(readProductsFromFile(this->fileName));
 
 	std::cout << "Cleaned successfully" << endl;
 }
 
-void FileService::withBigQuantityProduct(Product& newProduct, int sumQuantity)
+void FileService::withBigQuantityProduct(List<Product>& list, Product& newProduct, int sumQuantity)
 {
 	if (sumQuantity > newProduct.MAX_QUANTITY)
 	{
@@ -346,19 +434,19 @@ void FileService::withBigQuantityProduct(Product& newProduct, int sumQuantity)
 			if (sumQuantity <= newProduct.MAX_QUANTITY)
 			{
 				newProduct.setQuantity(sumQuantity);
-				products.add(newProduct);
+				list.add(newProduct);
 				sumQuantity -= newProduct.MAX_QUANTITY;
 			}
 			else {
 				newProduct.setQuantity(newProduct.MAX_QUANTITY);
-				products.add(newProduct);
+				list.add(newProduct);
 				sumQuantity -= newProduct.MAX_QUANTITY;
 			}
 		}
 	}
 	else {
 		newProduct.setQuantity(sumQuantity);
-		products.add(newProduct);
+		list.add(newProduct);
 		return;
 	}
 }

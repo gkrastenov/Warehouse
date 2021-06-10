@@ -7,10 +7,8 @@ using namespace std;
 
 void Product::setDefaultValues()
 {
-    manufacturer = nullptr;
     unit = Unit::Unknown;
     location = 0;
-    comment = nullptr;
 }
 
 Product::Product()
@@ -20,22 +18,15 @@ Product::Product()
 
 Product::~Product()
 {
-    delete[] manufacturer;
-    delete[] comment;
-
     setDefaultValues();
 }
 
-void Product::setManufacturer(const char* manufacturer) {
-    size_t lengthManufacturer = strlen(manufacturer) + 1;
-    this->manufacturer = new char[lengthManufacturer];
-    strcpy_s(this->manufacturer, lengthManufacturer, manufacturer);
+void Product::setManufacturer(const String& manufacturer) {
+    this->manufacturer = manufacturer;
 }
 
-void Product::setComment(const char* comment) {
-    size_t lengthComment = strlen(comment) + 1;
-    this->comment = new char[lengthComment];
-    strcpy_s(this->comment, lengthComment, comment);
+void Product::setComment(const String& comment) {
+    this->comment = comment;
 }
 
 void Product::setLocation(const int location) {
@@ -72,7 +63,7 @@ bool Product::setUnit(const int unit)
     return false;
 }
 
-char* Product::getManufacturer() const {
+String Product::getManufacturer() const {
     return this->manufacturer;
 }
 
@@ -84,7 +75,7 @@ int Product::getLocation() const {
     return this->location;
 }
 
-char* Product::getComment() const {
+String Product::getComment() const {
     return this->comment;
 }
 
@@ -155,9 +146,7 @@ void Product::print()
 Product& Product::operator = (const Product& product) {
     if (this != &product)
     {
-        delete[] manufacturer;
-        delete[] comment;
-
+        setDescription(product.description);
         setManufacturer(product.manufacturer);
         setExpiryDate(product.expiryDate);
         setEntryDate(product.entryDate);
@@ -169,9 +158,12 @@ Product& Product::operator = (const Product& product) {
     return *this;
 }
 
+/*
+
 bool Product::operator==(const Product& product)
 {
     return strcmp(this->getDescription(), product.getDescription()) == 0
         && strcmp(this->getManufacturer(), product.getManufacturer()) == 0
         && strcmp(this->getComment(), product.getComment()) == 0;
 }
+*/

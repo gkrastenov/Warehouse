@@ -30,7 +30,7 @@ bool HomeView::menu()
 {
 	menuView();
 
-	char consoleCommand[20];
+	char consoleCommand[50];
 	cin >> consoleCommand;
 	cin.ignore();
 
@@ -73,6 +73,11 @@ bool HomeView::menu()
 		return true;
 	}
 
+	if (strcmp(consoleCommand, "log") == 0)
+	{
+		return fileView.logView();
+	}
+
 	if (strcmp(consoleCommand, "remove") == 0)
 	{
 		if (fileView.removeView())
@@ -84,11 +89,6 @@ bool HomeView::menu()
 		return true;
 	}
 
-	if (strcmp(consoleCommand, "exit") == 0)
-	{
-		return false;
-	}
-
 	if (strcmp(consoleCommand, "print") == 0)
 	{
 		return fileView.printView();
@@ -97,6 +97,14 @@ bool HomeView::menu()
 	if (strcmp(consoleCommand, "clean") == 0)
 	{
 		return fileView.cleanView();
+	}
+
+	// Changes Commands
+
+	// Program Commands
+	if (strcmp(consoleCommand, "exit") == 0)
+	{
+		return false;
 	}
 
 	cout << "Invalid command" << endl;

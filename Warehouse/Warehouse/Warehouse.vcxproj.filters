@@ -40,6 +40,9 @@
     <ClCompile Include="Entity.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
+    <ClCompile Include="String.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DateTime.h">
@@ -63,6 +66,9 @@
     </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="String.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

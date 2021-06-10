@@ -38,9 +38,39 @@ Change::Change()
     this->type = ChangeType::Undefined;
 }
 
+Change::Change(const String& description, const int quantity, const DateTime& date, const ChangeType type)
+{
+    setDescription(description);
+    setQuantity(quantity);
+    setEntryDate(date);
+    setChangeType(type);
+}
+
 Change::~Change()
 {
+}
 
+int Change::changeTypeToInt(const ChangeType type) const
+{
+    switch (type)
+    {
+    case ChangeType::Add:
+        return 0;
+        break;
+
+    case ChangeType::Remove:
+        return 1;
+
+        break;
+    case ChangeType::Clean:
+        return 2;
+        break;
+
+    default:
+        return 3;
+        break;
+    }
+    return 3;
 }
 
 void Change::printChangeType(const ChangeType type) const
@@ -70,8 +100,8 @@ void Change::print()
     std::cout << "Description : " << this->getDescription() << std::endl;
 
     DateTime currDate = this->getEntryDate();
-    std::cout << currDate.getYear() << '/' << currDate.getMonth() << '/'
-        << currDate.getDay() << std::endl;
+    std::cout << "EntryDate " << std::endl;;
+    std::cout << currDate << std::endl;
 
     std::cout << "ChangeType : ";
     this->printChangeType(this->getChangeType());

@@ -29,4 +29,5 @@ public:
 	bool removeView();
 	bool printView();
 	bool cleanView();
+	bool logView();
 };

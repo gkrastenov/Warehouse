@@ -1,6 +1,6 @@
 #pragma once
-#include<iostream>
 #include "DateTime.h"
+#include "String.h"
 
 class Entity
 {
@@ -9,7 +9,7 @@ private:
 
 protected:
 	DateTime entryDate;
-	char* description;
+	String description;
 	int quantity;
 
 public:
@@ -18,12 +18,12 @@ public:
 	Entity& operator=(const Entity& other);
 	~Entity();
 
-	void setDescription(const char* description);
+	void setDescription(const String& description);
 	void setEntryDate(const char* entryDate);
 	void setEntryDate(const DateTime& entryDate);
 	void setQuantity(const int quantity);
 
-	char* getDescription() const;
+	String getDescription() const;
 	DateTime& getEntryDate();
 	int getQuantity() const;
 

@@ -26,7 +26,9 @@ bool FileView::openView() {
 
 	if (service.isExistsFile(inputFileName))
 	{
-		service.products = service.readFromFile(inputFileName);
+		service.products = service.readProductsFromFile(inputFileName);
+		service.changes = service.readChangesFromFile();
+
 		cout << "Successfully opened " << inputFileName << endl;
 		return true;
 	}
@@ -35,12 +37,12 @@ bool FileView::openView() {
 	service.createFile(inputFileName);
 	cout << "File it was not exists but now succesfully is created and opened " << inputFileName << endl;
 
+	service.changes = service.readChangesFromFile();
 	return true;
 }
 
 bool FileView::closeView()
 {
-
 	if (this->service.isOpenFile() == false)
 	{
 		return true;
@@ -62,7 +64,10 @@ bool FileView::saveView()
 
 	cout << "Saving......" << endl;
 
-	bool isSaved = this->service.writeToFile(this->service.getFileName());
+	this->service.writeChangesToFile();
+
+	bool isSaved = true;
+    this->service.writeProductsToFile(this->service.getFileName());
 	if (isSaved)
 	{
 		cout << "Saved succesfully" << endl;
@@ -81,7 +86,9 @@ bool FileView::saveAsView() {
 
 	service.createFile(inputFileName);
 	
-	bool isSaved = this->service.writeToFile(inputFileName);
+	this->service.writeChangesToFile();
+	bool isSaved = true;
+	this->service.writeProductsToFile(inputFileName);
 	if (isSaved)
 	{
 		cout << "Saved As succesfully" << endl;
@@ -116,9 +123,14 @@ bool FileView::addView() {
 		return false;
 	}
 
-	Product product = Product();
+	Product product;
+
 	cout << "Enter product description" << endl;
-	product.setDescription(enterString(product.MAX_DESCRIPTION));
+	char descrp[50];
+	cin >> descrp;
+	cin.ignore();
+	String description(descrp);
+	product.setDescription(description);
 
 	cout << "Enter expiry date time (example: 2021/12/23)" << endl;
 	product.setExpiryDate(enterString(10));
@@ -134,10 +146,16 @@ bool FileView::addView() {
 	}
 
 	cout << "Enter product manufacturer" << endl;
-	product.setManufacturer(enterString(product.MAX_MANUFACTURER));
+	char manufact[50];
+	cin >> manufact;
+	String manufacturer(manufact);
+	product.setManufacturer(manufacturer);
 
 	cout << "Enter product comment" << endl;
-	product.setComment(enterString(product.MAX_COMMENT));
+	char comm[50];
+	cin >> comm;
+	String comment(comm);
+	product.setComment(comment);
 
 	cout << "Enter product unit (0 for Kilograms , 1 for Liters)" << endl;
 	int unit;
@@ -156,7 +174,6 @@ bool FileView::addView() {
 
 	if (isValidEnterDescription(product) == false
 		|| isValidEnterManufacturer(product) == false
-		|| isValidEnterManufacturer(product) == false
 		|| isValidEnterComment(product) == false
 		|| isValidEnterLocation(product) == false
 		|| isValidEnterQuantity(product) == false)
@@ -164,7 +181,7 @@ bool FileView::addView() {
 		return false;
 	}
 	else {
-		this->service.addProduct(product);
+		this->service.products.copy(this->service.addProduct(product));
 		return true;
 	}
 }
@@ -179,7 +196,11 @@ bool FileView::removeView()
 	Product product = Product();
 
 	cout << "Enter product description" << endl;
-	product.setDescription(enterString(product.MAX_DESCRIPTION));
+	char descrp[50];
+	cin >> descrp;
+	cin.ignore();
+	String description(descrp);
+	product.setDescription(description);
 
 	cout << "Enter quantity:" << endl;
 	int quantity;
@@ -221,7 +242,27 @@ bool FileView::cleanView()
 	DateTime dateNow = DateTime((now->tm_year + 1900), (now->tm_mon + 1), now->tm_mday);
 
 	this->service.cleanProducts(dateNow);
+	this->service.writeChangesToFile();
 
+	return true;
+}
+
+bool FileView::logView()
+{
+	cout << "Enter from date time (example: 2019/12/23)" << endl;
+	DateTime fromDate(enterString(10));
+
+	cout << "Enter to date time (example: 2020/12/23)" << endl;
+	DateTime toDate(enterString(10));
+
+	if (isValidEnterDate(fromDate) == false
+		|| isValidEnterDate(toDate) == false
+		|| fromDate < toDate == false)
+	{
+		return false;
+	}
+
+	// TODO: read from logs.txt
 	return true;
 }
 
@@ -239,19 +280,19 @@ bool FileView::isValidEnterDate(const DateTime& dateTime)
 
 bool FileView::isValidEnterDescription(const Product& enterProduct)
 {
-	int length = strlen(enterProduct.getDescription());
+	int length = enterProduct.getDescription().getLength();
 	return (length >= enterProduct.MIN_DESCRIPTION && length <= enterProduct.MAX_DESCRIPTION);
 }
 
 bool FileView::isValidEnterManufacturer(const Product& enterProduct)
 {
-	int length = strlen(enterProduct.getManufacturer());
+	int length = enterProduct.getManufacturer().getLength();
 	return (length >= enterProduct.MIN_MANUFACTURER && length <= enterProduct.MAX_MANUFACTURER);
 }
 
 bool FileView::isValidEnterComment(const Product& enterProduct)
 {
-	int length = strlen(enterProduct.getComment());
+	int length = enterProduct.getComment().getLength();
 	return (length >= enterProduct.MIN_COMMENT && length <= enterProduct.MAX_COMMENT);
 }
 

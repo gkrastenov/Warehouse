@@ -147,6 +147,7 @@
     <ClCompile Include="HomeView.cpp" />
     <ClCompile Include="List.cpp" />
     <ClCompile Include="Product.cpp" />
+    <ClCompile Include="String.cpp" />
     <ClCompile Include="Warehouse.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +159,7 @@
     <ClInclude Include="FileService.h" />
     <ClInclude Include="HomeView.h" />
     <ClInclude Include="Product.h" />
+    <ClInclude Include="String.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,5 +1,6 @@
 #pragma once
 #include "Entity.h"
+#include "String.h"
 
 enum class ChangeType
 {
@@ -8,6 +9,7 @@ enum class ChangeType
 	Clean = 2,
 	Undefined = 3
 };
+
 class Change :
 	public Entity
 {
@@ -19,9 +21,10 @@ public:
 	ChangeType getChangeType() const;
 	
 	Change();
+	Change(const String& description, const int quantity, const DateTime& date, const ChangeType type);
 	~Change();
 
+	int changeTypeToInt(const ChangeType type) const;
 	void printChangeType(const ChangeType type) const;
 	void print() override;
 };
-
