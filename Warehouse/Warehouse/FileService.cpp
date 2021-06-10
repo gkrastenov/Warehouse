@@ -472,6 +472,7 @@ void FileService::getLogs(const DateTime& fromDateTime, const DateTime& toDateTi
 		Change change(logs[i]);
 		if (change.getEntryDate() >= fromDateTime && change.getEntryDate() <= toDateTime)
 		{
+			cout << endl;
 			change.print();
 		}
 	}

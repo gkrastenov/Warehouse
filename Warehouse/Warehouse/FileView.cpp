@@ -15,12 +15,18 @@ FileView::FileView() {
 	this->service = FileService();
 }
 
-bool FileView::openView() {
+bool FileView::openView(){
 	cout << "Enter file name (Example: file2.txt)" << endl;
 
 	char inputFileName[50];
 	cin >> inputFileName;
 	cin.ignore();
+
+	if (isValidEnterFileName(inputFileName) == false)
+	{
+		cout << "Invalid file name" << endl;
+		return true;
+	}
 
 	this->service.setFileName(inputFileName);
 
@@ -84,10 +90,14 @@ bool FileView::saveAsView() {
 	}
 
 	cout << "Enter file name (Example: other.txt)" << endl;
-
 	char inputFileName[50];
 	cin.getline(inputFileName, 50);
-
+	
+	if (isValidEnterFileName(inputFileName) == false)
+	{
+		cout << "Invalid file name" << endl;
+		return true;
+	}
 	if (this->service.isExistsFile(inputFileName))
 	{
 		cout << "File with this name: " << inputFileName << " already exists, please enter another file name" << endl;
@@ -281,37 +291,67 @@ char* FileView::enterString(const size_t length)
 	return str;
 }
 
-bool FileView::isValidEnterDate(const DateTime& dateTime)
+bool FileView::isValidEnterDate(const DateTime& dateTime) const
 {
 	return (dateTime.getDay() != 0 || dateTime.getMonth() != 0 || dateTime.getYear() != 0);
 }
 
-bool FileView::isValidEnterDescription(const Product& enterProduct)
+bool FileView::isValidEnterDescription(const Product& enterProduct) const
 {
 	int length = enterProduct.getDescription().getLength();
 	return (length >= enterProduct.MIN_DESCRIPTION && length <= enterProduct.MAX_DESCRIPTION);
 }
 
-bool FileView::isValidEnterManufacturer(const Product& enterProduct)
+bool FileView::isValidEnterManufacturer(const Product& enterProduct) const
 {
 	int length = enterProduct.getManufacturer().getLength();
 	return (length >= enterProduct.MIN_MANUFACTURER && length <= enterProduct.MAX_MANUFACTURER);
 }
 
-bool FileView::isValidEnterComment(const Product& enterProduct)
+bool FileView::isValidEnterComment(const Product& enterProduct) const
 {
 	int length = enterProduct.getComment().getLength();
 	return (length >= enterProduct.MIN_COMMENT && length <= enterProduct.MAX_COMMENT);
 }
 
-bool FileView::isValidEnterLocation(const Product& enterProduct)
+bool FileView::isValidEnterLocation(const Product& enterProduct) const
 {
 	int enterLocation = enterProduct.getLocation();
 	return (enterLocation >= enterProduct.MIN_LOCATION && enterLocation <= enterProduct.MAX_LOCATION);
 }
 
-bool FileView::isValidEnterQuantity(const Product& enterProduct)
+bool FileView::isValidEnterQuantity(const Product& enterProduct) const
 {
 	int enterQuantity = enterProduct.getQuantity();
 	return (enterQuantity >= enterProduct.MIN_QUANTITY);
+}
+
+bool FileView::isValidEnterFileName(const char* fileName) const
+{
+	if (strcmp(fileName, this->service.LOG_FILENAME) == 0)
+	{
+		return false;
+	}
+
+	bool isValid = false;
+	size_t len = strlen(fileName);
+	for (size_t i = 0; i < len; i++)
+	{
+		if (fileName[i] == '\0')
+		{
+			break;
+		}
+		if (fileName[i] == '.')
+		{
+			if ((len - i) == 4)
+			{
+				return fileName[i + 1] == 't' && fileName[i + 2] == 'x' && fileName[i + 3] == 't';
+			}
+			else {
+				return false;
+			}
+		}
+	}
+
+	return isValid;
 }

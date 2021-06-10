@@ -9,12 +9,6 @@ private:
 	FileService service;
 
 	char* enterString(const size_t length);
-	bool isValidEnterDate(const DateTime& dateTime);
-	bool isValidEnterDescription(const Product& enterProduct);
-	bool isValidEnterManufacturer(const Product& enterProduct);
-	bool isValidEnterComment(const Product& enterProduct);
-	bool isValidEnterLocation(const Product& enterProduct);
-	bool isValidEnterQuantity(const Product& enterProduct);
 
 public:
 	FileView();
@@ -30,4 +24,12 @@ public:
 	bool printView();
 	bool cleanView();
 	bool logView();
+
+	bool isValidEnterDate(const DateTime& dateTime) const;
+	bool isValidEnterDescription(const Product& enterProduct) const;
+	bool isValidEnterManufacturer(const Product& enterProduct) const;
+	bool isValidEnterComment(const Product& enterProduct) const;
+	bool isValidEnterLocation(const Product& enterProduct) const;
+	bool isValidEnterQuantity(const Product& enterProduct) const;
+	bool isValidEnterFileName(const char* fileName) const;
 };

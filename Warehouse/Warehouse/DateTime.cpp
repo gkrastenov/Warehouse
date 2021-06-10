@@ -166,7 +166,10 @@ bool DateTime::operator<=(const DateTime& dateTime)
     {
         return true;
     }
-
+    if (compareMonth)
+    {
+        return true;
+    }
     if (compareMonth == false && compareDay)
     {
         return true;

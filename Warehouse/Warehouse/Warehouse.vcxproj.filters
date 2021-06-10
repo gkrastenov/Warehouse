@@ -60,7 +60,6 @@
     <ClInclude Include="FileView.h">
       <Filter>Views</Filter>
     </ClInclude>
-    <ClInclude Include="..\Warehouse.Tests\doctest.h" />
     <ClInclude Include="Change.h">
       <Filter>Entities</Filter>
     </ClInclude>
@@ -70,5 +69,6 @@
     <ClInclude Include="String.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="doctest.h" />
   </ItemGroup>
 </Project>
