@@ -425,6 +425,37 @@ void FileService::cleanProducts(const DateTime& dateTime)
 	std::cout << "Cleaned successfully" << endl;
 }
 
+bool FileService::saveAsProducts(const char* fileName)
+{
+	List<Product> toBeSaved(readProductsFromFile(this->fileName));
+	cleanFile(fileName);
+
+	ofstream myfile;
+	myfile.open(fileName);
+
+	for (size_t i = 0; i < toBeSaved.getSize(); i++)
+	{
+
+		Product currentProduct(toBeSaved[i]);
+
+		DateTime expiryDate = currentProduct.getExpiryDate();
+		DateTime entryDate = currentProduct.getEntryDate();
+
+		// add product to file
+		myfile << currentProduct.getDescription()
+			<< " " << expiryDate
+			<< " " << entryDate
+			<< " " << currentProduct.getManufacturer()
+			<< " " << currentProduct.unitToNumber(currentProduct.getUnit())
+			<< " " << currentProduct.getQuantity()
+			<< " " << currentProduct.getLocation()
+			<< " " << currentProduct.getComment() << endl;
+	}
+
+	myfile.close();
+	return true;
+}
+
 void FileService::withBigQuantityProduct(List<Product>& list, Product& newProduct, int sumQuantity)
 {
 	if (sumQuantity > newProduct.MAX_QUANTITY)

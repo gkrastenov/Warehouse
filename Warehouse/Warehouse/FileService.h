@@ -40,6 +40,7 @@ public:
 	void removeProduct(Product& newProduct);
 	List<Product> addProduct(Product& newProduct);
 	void cleanProducts(const DateTime& dateTime);
+	bool saveAsProducts(const char* fileName);
 
 	FileService& operator = (const FileService& date);
 };

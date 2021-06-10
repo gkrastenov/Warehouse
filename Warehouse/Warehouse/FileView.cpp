@@ -66,8 +66,7 @@ bool FileView::saveView()
 
 	this->service.writeChangesToFile();
 
-	bool isSaved = true;
-    this->service.writeProductsToFile(this->service.getFileName());
+	bool isSaved = this->service.writeProductsToFile(this->service.getFileName());
 	if (isSaved)
 	{
 		cout << "Saved succesfully" << endl;
@@ -79,16 +78,25 @@ bool FileView::saveView()
 }
 
 bool FileView::saveAsView() {
+	if (this->service.isOpenFile() == false)
+	{
+		return true;
+	}
+
 	cout << "Enter file name (Example: other.txt)" << endl;
 
 	char inputFileName[50];
 	cin.getline(inputFileName, 50);
 
+	if (this->service.isExistsFile(inputFileName))
+	{
+		cout << "File with this name: " << inputFileName << " already exists, please enter another file name" << endl;
+		return true;
+	}
+
 	service.createFile(inputFileName);
 	
-	this->service.writeChangesToFile();
-	bool isSaved = true;
-	this->service.writeProductsToFile(inputFileName);
+	bool isSaved = this->service.saveAsProducts(inputFileName);
 	if (isSaved)
 	{
 		cout << "Saved As succesfully" << endl;
@@ -96,7 +104,7 @@ bool FileView::saveAsView() {
 	}
 
 	cout << "Save As failed" << endl;
-	return false;
+	return true;
 }
 
 bool FileView::helpView() {
