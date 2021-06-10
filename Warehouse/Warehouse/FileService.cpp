@@ -12,7 +12,7 @@
 #pragma warning(disable : 4996)
 using namespace std;
 
-bool FileService::isOpenFile()
+bool FileService::isOpenFile() const
 {
 	if (this->fileName == nullptr || strcmp(this->fileName, "") == 0)
 	{
@@ -238,7 +238,7 @@ void FileService::cleanFile(const char* fileName)
 	ofs.close();
 }
 
-bool FileService::isExistsFile(const char* fileName)
+bool FileService::isExistsFile(const char* fileName) const
 {
 	std::fstream fileStream;
 	fileStream.open(fileName);
@@ -454,6 +454,27 @@ bool FileService::saveAsProducts(const char* fileName)
 
 	myfile.close();
 	return true;
+}
+
+void FileService::getLogs(const DateTime& fromDateTime, const DateTime& toDateTime)
+{
+	List<Change> logs(readChangesFromFile());
+
+	if (logs.getSize() <= 0)
+	{
+		cout << "Does not have any logs" << endl;
+		return;
+	}
+
+	cout << "All logs from " << fromDateTime << " to " << toDateTime << endl;
+	for (size_t i = 0; i < logs.getSize(); i++)
+	{
+		Change change(logs[i]);
+		if (change.getEntryDate() >= fromDateTime && change.getEntryDate() <= toDateTime)
+		{
+			change.print();
+		}
+	}
 }
 
 void FileService::withBigQuantityProduct(List<Product>& list, Product& newProduct, int sumQuantity)

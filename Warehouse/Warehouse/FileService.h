@@ -33,14 +33,15 @@ public:
 	void writeChangesToFile();
 	void writeProductsToFile(int index[], const int size, const char* fileName);
 
-	bool isExistsFile(const char* fileName);
-	bool isOpenFile();
+	bool isExistsFile(const char* fileName) const;
+	bool isOpenFile() const;
 	void createFile(const char* fileName);
 	void getAllProducts() const;
 	void removeProduct(Product& newProduct);
 	List<Product> addProduct(Product& newProduct);
 	void cleanProducts(const DateTime& dateTime);
 	bool saveAsProducts(const char* fileName);
+	void getLogs(const DateTime& fromDateTime, const DateTime& toDateTime);
 
 	FileService& operator = (const FileService& date);
 };

@@ -167,6 +167,25 @@ bool DateTime::operator<=(const DateTime& dateTime)
         return true;
     }
 
+    if (compareMonth == false && compareDay)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+bool DateTime::operator>=(const DateTime& dateTime)
+{
+    bool compareYear = this->getYear() < dateTime.year;
+    bool compareMonth = this->getMonth() < dateTime.month;
+    bool compareDay = this->getDay() >= dateTime.day;
+
+    if (compareYear)
+    {
+        return true;
+    }
+
     if (compareYear || compareMonth)
     {
 
@@ -180,7 +199,7 @@ bool DateTime::operator<=(const DateTime& dateTime)
     return false;
 }
 
-std::ostream& operator<<(std::ostream& os, DateTime& date)
+std::ostream& operator<<(std::ostream& os, const DateTime& date)
 {
 	os << date.getYear() << '/' << date.getMonth() << '/' << date.getDay();
 	return os;

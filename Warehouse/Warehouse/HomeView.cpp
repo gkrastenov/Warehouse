@@ -21,6 +21,7 @@ void HomeView::menuView()
 	cout << "Print (print)" << endl;
 	cout << "Add (add)" << endl;
 	cout << "Remove (remove)" << endl;
+	cout << "Log (log)" << endl;
 	cout << "Clean (clean)" << endl;
 	cout << "Exit (exit)" << endl;
 	cout << "Enter next command: " << endl;
@@ -100,6 +101,10 @@ bool HomeView::menu()
 	}
 
 	// Changes Commands
+	if (strcmp(consoleCommand, "log") == 0)
+	{
+		return fileView.logView();
+	}
 
 	// Program Commands
 	if (strcmp(consoleCommand, "exit") == 0)

@@ -270,7 +270,7 @@ bool FileView::logView()
 		return false;
 	}
 
-	// TODO: read from logs.txt
+	this->service.getLogs(fromDate, toDate);
 	return true;
 }
 

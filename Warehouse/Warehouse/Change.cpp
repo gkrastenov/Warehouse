@@ -100,7 +100,7 @@ void Change::print()
     std::cout << "Description : " << this->getDescription() << std::endl;
 
     DateTime currDate = this->getEntryDate();
-    std::cout << "EntryDate " << std::endl;;
+    std::cout << "EntryDate: ";
     std::cout << currDate << std::endl;
 
     std::cout << "ChangeType : ";
